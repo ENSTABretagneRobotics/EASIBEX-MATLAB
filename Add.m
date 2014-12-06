@@ -14,12 +14,18 @@
 % To define a vector<interval> :
 % x = {[-2,2];[2,4];[-4,1]}
 % This will be represented by a MATLAB cell array.
-% x{3} would be [-4,1] and x{3}(2) would be 1.
+% x{3} would be [-4,1] and x{3}(1,2) would be 1.
 
 % To define a vector<box> :
 % x = {[[-2,2];[2,4];[-4,1]];[[-1,5];[-5,8];[-7,2]];[[-1,1];[0,2];[1,2]];[[-2,2];[2,8];[-1,2]]}
 % This will be represented by a MATLAB cell array.
 % x{4}(3,:) would be [-1,2].
+
+% Ideally, you should call : 
+% loadlibrary('intervalx_adapt');
+% in the beginning (otherwise the initialization will be done when necessary but might take several seconds), and :
+% unloadlibrary('intervalx_adapt');
+% at the end (this will not be done automatically, but it should not be important in most cases...).
 
 % Z = Add([0,2], [-1,2])
 % Z = Add([[0,1];[0,10];[0,10]], [[-1,0];[2,5];[-1,0]])
@@ -105,4 +111,4 @@ end
 
 % To remove in release, user should unload manually, but should not be
 % important if it is not unloaded...
-unloadlibrary('intervalx_adapt');
+% unloadlibrary('intervalx_adapt');

@@ -87,4 +87,4 @@ end
 
 % To remove in release, user should unload manually, but should not be
 % important if it is not unloaded...
-unloadlibrary('intervalx_adapt');
+% unloadlibrary('intervalx_adapt');
