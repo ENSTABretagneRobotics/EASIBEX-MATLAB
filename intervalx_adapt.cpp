@@ -106,15 +106,13 @@ INTERVALX_ADAPT_API void Caddx(double* pZ, double* pX, double* pY, unsigned int 
 INTERVALX_ADAPT_API void Bisectx(double* pX, double* pX1, double* pX2, unsigned int n)
 {
 	box X(n);
-	box X1(n);
-	box X2(n);
+	box X1 = Infinity(n);
+	box X2 = Infinity(n);
 
 	for (unsigned int i = 0; i < n; i++)
 	{
 		unsigned int index = 2*i;
 		X[i+1] = interval(pX[index],pX[index+1]);
-		X1[i+1] = interval(pX1[index],pX1[index+1]);
-		X2[i+1] = interval(pX2[index],pX2[index+1]);
 	}
 
 	Bisect(X, X1, X2);
@@ -122,13 +120,28 @@ INTERVALX_ADAPT_API void Bisectx(double* pX, double* pX1, double* pX2, unsigned 
 	for (unsigned int i = 0; i < n; i++)
 	{
 		unsigned int index = 2*i;
-		pX[index] = X[i+1].inf;
-		pX[index+1] = X[i+1].sup;
 		pX1[index] = X1[i+1].inf;
 		pX1[index+1] = X1[i+1].sup;
 		pX2[index] = X2[i+1].inf;
 		pX2[index+1] = X2[i+1].sup;
 	}
+}
+
+// Parameters : return value, box, box size.
+INTERVALX_ADAPT_API void Widthx(double* pr, double* pX, unsigned int n)
+{
+	double r = 0;
+	box X(n);
+
+	for (unsigned int i = 0; i < n; i++)
+	{
+		unsigned int index = 2*i;
+		X[i+1] = interval(pX[index],pX[index+1]);
+	}
+
+	r = Width(X);
+
+	*pr = r;
 }
 
 // Parameters : return value, vector<interval>/vector<box>, nb elements, box size.
