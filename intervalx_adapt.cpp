@@ -1,58 +1,108 @@
 #include "intervalx_adapt.h"
-#include "box.h"
+#include "imatrix.h"
 
-// Parameters : interval/box/imatrix/vector<interval>/vector<box>, nb elements, box size, imatrix width.
-INTERVALX_ADAPT_API void Caddx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+// Parameters : return value, interval/box/imatrix/vector<interval>/vector<box>, nb elements, box size, imatrix width.
+INTERVALX_ADAPT_API void Addx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
 {
-	// imatrix, vector not yet handled...
-
-	// interval
-	if ((nb == 1)&&(n == 1)&&(m == 1))
+	// vector
+	if (m == 1)
 	{
-		interval Z(pZ[0], pZ[1]);
-		interval X(pX[0], pX[1]);
-		interval Y(pY[0], pY[1]);
+		for (unsigned int k = 0; k < nb; k++)
+		{
+			box Z(n);
+			box X(n);
+			box Y(n);
 
-		Cadd(Z, X, Y);
+			for (unsigned int i = 0; i < n; i++)
+			{
+				unsigned int index = 2*(n*k+i);
+				Z[i+1] = interval(pZ[index],pZ[index+1]);
+				X[i+1] = interval(pX[index],pX[index+1]);
+				Y[i+1] = interval(pY[index],pY[index+1]);
+			}
 
-		pZ[0] = Z.inf;
-		pZ[1] = Z.sup;
-		pX[0] = X.inf;
-		pX[1] = X.sup;
-		pY[0] = Y.inf;
-		pY[1] = Y.sup;
+			Z = X + Y;
+
+			for (unsigned int i = 0; i < n; i++)
+			{
+				unsigned int index = 2*(n*k+i);
+				pZ[index] = Z[i+1].inf;
+				pZ[index+1] = Z[i+1].sup;
+			}
+		}
 	}
 
-	// box
-	if ((nb == 1)&&(n > 1)&&(m == 1))
+	// imatrix
+	if ((nb == 1)&&(m > 1))
 	{
-		box Z(n);
-		box X(n);
-		box Y(n);
+		imatrix Z(n,m);
+		imatrix X(n,m);
+		imatrix Y(n,m);
 
-		for (unsigned int i = 0; i < n; i++)
+		for (unsigned int j = 0; j < m; j++)
 		{
-			unsigned int index = 2*i;
-			Z[i+1] = interval(pZ[index],pZ[index+1]);
-			X[i+1] = interval(pX[index],pX[index+1]);
-			Y[i+1] = interval(pY[index],pY[index+1]);
+			for (unsigned int i = 0; i < n; i++)
+			{
+				unsigned int index = 2*(n*j+i);
+				Z.SetVal(i+1,j+1,interval(pZ[index],pZ[index+1]));
+				X.SetVal(i+1,j+1,interval(pX[index],pX[index+1]));
+				Y.SetVal(i+1,j+1,interval(pY[index],pY[index+1]));
+			}
 		}
 
-		Cadd(Z, X, Y);
+		Z = X + Y;
 
-		for (unsigned int i = 0; i < n; i++)
+		for (unsigned int j = 0; j < m; j++)
 		{
-			unsigned int index = 2*i;
-			pZ[index] = Z[i+1].inf;
-			pZ[index+1] = Z[i+1].sup;
-			pX[index] = X[i+1].inf;
-			pX[index+1] = X[i+1].sup;
-			pY[index] = Y[i+1].inf;
-			pY[index+1] = Y[i+1].sup;
+			for (unsigned int i = 0; i < n; i++)
+			{
+				unsigned int index = 2*(n*j+i);
+				pZ[index] = Z(i+1,j+1).inf;
+				pZ[index+1] = Z(i+1,j+1).sup;
+			}
 		}
 	}
 }
 
+// Parameters : interval/box/imatrix/vector<interval>/vector<box>, nb elements, box size, imatrix width.
+INTERVALX_ADAPT_API void Caddx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+{
+	// imatrix not yet handled...
+
+	// vector
+	if (m == 1)
+	{
+		for (unsigned int k = 0; k < nb; k++)
+		{
+			box Z(n);
+			box X(n);
+			box Y(n);
+
+			for (unsigned int i = 0; i < n; i++)
+			{
+				unsigned int index = 2*(n*k+i);
+				Z[i+1] = interval(pZ[index],pZ[index+1]);
+				X[i+1] = interval(pX[index],pX[index+1]);
+				Y[i+1] = interval(pY[index],pY[index+1]);
+			}
+
+			Cadd(Z, X, Y);
+
+			for (unsigned int i = 0; i < n; i++)
+			{
+				unsigned int index = 2*(n*k+i);
+				pZ[index] = Z[i+1].inf;
+				pZ[index+1] = Z[i+1].sup;
+				pX[index] = X[i+1].inf;
+				pX[index+1] = X[i+1].sup;
+				pY[index] = Y[i+1].inf;
+				pY[index+1] = Y[i+1].sup;
+			}
+		}
+	}
+}
+
+// Parameters : return value, box, box, box size.
 INTERVALX_ADAPT_API void Bisectx(double* pX, double* pX1, double* pX2, unsigned int n)
 {
 	box X(n);
@@ -81,7 +131,7 @@ INTERVALX_ADAPT_API void Bisectx(double* pX, double* pX1, double* pX2, unsigned 
 	}
 }
 
-// Parameters : return value, vector<interval>/boxes/vector<boxes>, nb elements, boxes size.
+// Parameters : return value, vector<interval>/vector<box>, nb elements, box size.
 INTERVALX_ADAPT_API void Interx(double* pr, double* px, unsigned int nb, unsigned int n)
 {
 	box r(n);

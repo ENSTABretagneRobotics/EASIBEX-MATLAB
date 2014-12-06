@@ -1,8 +1,14 @@
+#ifdef _MSC_VER
 #ifdef INTERVALX_ADAPT_EXPORTS
 #define INTERVALX_ADAPT_API __declspec(dllexport) 
 #else
 #define INTERVALX_ADAPT_API __declspec(dllimport) 
-#endif
+#endif // INTERVALX_ADAPT_EXPORTS
+#else
+#define INTERVALX_ADAPT_API 
+#endif // _MSC_VER
+
+INTERVALX_ADAPT_API void Addx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m);
 
 INTERVALX_ADAPT_API void Caddx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m);
 

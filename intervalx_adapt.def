@@ -1,6 +1,7 @@
 LIBRARY intervalx_adapt
 
 EXPORTS
+   Addx
    Caddx
    Bisectx
    Interx

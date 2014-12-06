@@ -1,6 +1,5 @@
-% box = Inter(vector<box>)
 % x = {[[-2,2];[2,4];[-4,1]];[[-1,5];[-5,8];[-7,2]];[[-1,1];[0,2];[1,2]];[[-2,2];[2,8];[-1,2]]}
-% r = Inter(x);
+% r = Inter(x)
 function r = Inter(x)
 
 % Ideally, user should load manually...

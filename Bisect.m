@@ -1,5 +1,4 @@
-% Bisect(box&, box&, box&)
-% [X, X1, X2] = Bisect([[-10,10];[2,10];[10,11]], [[-Inf,Inf];[-Inf,Inf];[-Inf,Inf]], [[-Inf,Inf];[-Inf,Inf];[-Inf,Inf]]);
+% [X, X1, X2] = Bisect([[-10,10];[2,10];[10,11]], [[-Inf,Inf];[-Inf,Inf];[-Inf,Inf]], [[-Inf,Inf];[-Inf,Inf];[-Inf,Inf]])
 function [X, X1, X2] = Bisect(X_p, X1_p, X2_p)
 
 % Ideally, user should load manually...
