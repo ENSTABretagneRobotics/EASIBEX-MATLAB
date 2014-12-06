@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="interval_adapt">
+      <UniqueIdentifier>{b1e1185b-b673-491a-82bc-dd2445ebfbc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MATLAB">
+      <UniqueIdentifier>{7cb54b83-4bf7-4231-950b-61c1aeeefc24}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="intervalx_adapt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\interval_adapt\box.cpp">
+      <Filter>interval_adapt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\interval_adapt\iboolean.cpp">
+      <Filter>interval_adapt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\interval_adapt\imatrix.cpp">
+      <Filter>interval_adapt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\interval_adapt\interval.cpp">
+      <Filter>interval_adapt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\interval_adapt\rmatrix.cpp">
+      <Filter>interval_adapt</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="intervalx_adapt.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Cadd.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="Inter.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="Bisect.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="Add.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="imatrix.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="Width.m">
+      <Filter>MATLAB</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="intervalx_adapt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interval_adapt\box.h">
+      <Filter>interval_adapt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interval_adapt\iboolean.h">
+      <Filter>interval_adapt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interval_adapt\imatrix.h">
+      <Filter>interval_adapt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interval_adapt\interval.h">
+      <Filter>interval_adapt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interval_adapt\rmatrix.h">
+      <Filter>interval_adapt</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TODO.txt" />
+  </ItemGroup>
+</Project>
