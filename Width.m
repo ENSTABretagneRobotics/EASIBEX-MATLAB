@@ -1,5 +1,5 @@
-% [X, X1, X2] = Bisect([[-10,10];[2,10];[10,11]])
-function [X1, X2] = Bisect(X_p)
+% r = Width([[-10,10];[2,10];[10,11]])
+function r = Width(X_p)
 
 % Ideally, user should load manually...
 if not(libisloaded('intervalx_adapt'))
@@ -19,19 +19,15 @@ size_X_p = size(X_p);
 n = size_X_p(1); % Box dimension.
 
 % Shape conversions suitable for the pointers to send to the library.
+r = 0;
 X_p = reshape(X_p', [1 2*n]);
-X1 = repmat(NaN, [1 2*n]);
-X2 = repmat(NaN, [1 2*n]);
 
+pr = libpointer('doublePtr', r);
 pX_p = libpointer('doublePtr', X_p);
-pX1 = libpointer('doublePtr', X1);
-pX2 = libpointer('doublePtr', X2);
 
-calllib('intervalx_adapt', 'Bisectx', pX_p, pX1, pX2, n);
+calllib('intervalx_adapt', 'Widthx', pr, pX_p, n);
 
-% Conversions to human-readable format.
-X1 = reshape(pX1.value, [2 n])';
-X2 = reshape(pX2.value, [2 n])';
+r = pr.value;
 
 % To remove in release, user should unload manually, but should not be
 % important if it is not unloaded...

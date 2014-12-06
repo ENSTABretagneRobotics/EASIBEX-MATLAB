@@ -14,4 +14,6 @@ INTERVALX_ADAPT_API void Caddx(double* pZ, double* pX, double* pY, unsigned int 
 
 INTERVALX_ADAPT_API void Bisectx(double* pX, double* pX1, double* pX2, unsigned int n);
 
+INTERVALX_ADAPT_API void Widthx(double* pr, double* pX, unsigned int n);
+
 INTERVALX_ADAPT_API void Interx(double* pr, double* px, unsigned int nb, unsigned int n);
