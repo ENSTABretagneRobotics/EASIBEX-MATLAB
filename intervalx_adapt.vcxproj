@@ -105,13 +105,22 @@
     <ClCompile Include="..\interval_adapt\rmatrix.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Add.m" />
-    <None Include="Bisect.m" />
-    <None Include="Cadd.m" />
-    <None Include="imatrix.m" />
-    <None Include="Inter.m" />
     <None Include="intervalx_adapt.def" />
-    <None Include="Width.m" />
+    <None Include="i_Add.m" />
+    <None Include="i_Bisect.m" />
+    <None Include="i_Cadd.m" />
+    <None Include="i_Ccos.m" />
+    <None Include="i_Cdefaultbinarycontractor.m" />
+    <None Include="i_Cdefaultternarycontractor.m" />
+    <None Include="i_Cexp.m" />
+    <None Include="i_Cnorm.m" />
+    <None Include="i_Csin.m" />
+    <None Include="i_Csqr.m" />
+    <None Include="i_Csub.m" />
+    <None Include="i_Ctan.m" />
+    <None Include="i_imatrix.m" />
+    <None Include="i_Inter.m" />
+    <None Include="i_Width.m" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="intervalx_adapt.h" />

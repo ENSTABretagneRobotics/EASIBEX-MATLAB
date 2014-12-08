@@ -3,6 +3,14 @@ LIBRARY intervalx_adapt
 EXPORTS
    Addx
    Caddx
+   Csubx
+   Csqrx
+   Cexpx
+   Clogx
+   Cpowx
+   Ccosx
+   Csinx
+   Ctanx
    Bisectx
    Widthx
    Interx

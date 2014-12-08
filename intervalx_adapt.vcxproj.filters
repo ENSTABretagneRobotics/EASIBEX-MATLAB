@@ -44,22 +44,49 @@
     <None Include="intervalx_adapt.def">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="Cadd.m">
+    <None Include="i_Add.m">
       <Filter>MATLAB</Filter>
     </None>
-    <None Include="Inter.m">
+    <None Include="i_Bisect.m">
       <Filter>MATLAB</Filter>
     </None>
-    <None Include="Bisect.m">
+    <None Include="i_Cadd.m">
       <Filter>MATLAB</Filter>
     </None>
-    <None Include="Add.m">
+    <None Include="i_Ccos.m">
       <Filter>MATLAB</Filter>
     </None>
-    <None Include="imatrix.m">
+    <None Include="i_Cdefaultbinarycontractor.m">
       <Filter>MATLAB</Filter>
     </None>
-    <None Include="Width.m">
+    <None Include="i_Cdefaultternarycontractor.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cexp.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cnorm.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Csin.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Csqr.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Csub.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Ctan.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_imatrix.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Inter.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Width.m">
       <Filter>MATLAB</Filter>
     </None>
   </ItemGroup>

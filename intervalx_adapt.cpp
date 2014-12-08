@@ -1,6 +1,84 @@
 #include "intervalx_adapt.h"
 #include "imatrix.h"
 
+// Parameters : return value, interval/vector<interval>, nb elements.
+inline void Cdefaultintervalbinarycontractor(double* pY, double* pX, unsigned int nb, void (*pFunction)(interval&, interval&, int))
+{
+	for (unsigned int k = 0; k < nb; k++)
+	{
+		unsigned int index = 2*k;
+		interval Y = interval(pY[index],pY[index+1]);
+		interval X = interval(pX[index],pX[index+1]);
+		pFunction(Y, X, 0);
+		pY[index] = Y.inf; pY[index+1] = Y.sup;
+		pX[index] = X.inf; pX[index+1] = X.sup;
+	}
+}
+
+// Parameters : return value, box/vector<box>, nb elements, box size.
+inline void Cdefaultboxbinarycontractor(double* pY, double* pX, unsigned int nb, unsigned int n, void (*pFunction)(box&, box&, int))
+{
+	for (unsigned int k = 0; k < nb; k++)
+	{
+		box Y(n), X(n);
+		for (unsigned int i = 0; i < n; i++)
+		{
+			unsigned int index = 2*(n*k+i);
+			Y[i+1] = interval(pY[index],pY[index+1]);
+			X[i+1] = interval(pX[index],pX[index+1]);
+		}
+		pFunction(Y, X, 0);
+		for (unsigned int i = 0; i < n; i++)
+		{
+			unsigned int index = 2*(n*k+i);
+			pY[index] = Y[i+1].inf;
+			pY[index+1] = Y[i+1].sup;
+			pX[index] = X[i+1].inf;
+			pX[index+1] = X[i+1].sup;
+		}
+	}
+}
+
+// Parameters : return value, interval/vector<interval>, interval/vector<interval>, nb elements.
+inline void Cdefaultintervalternarycontractor(double* pZ, double* pX, double* pY, unsigned int nb, void (*pFunction)(interval&, interval&, interval&, int))
+{
+	for (unsigned int k = 0; k < nb; k++)
+	{
+		unsigned int index = 2*k;
+		interval Z = interval(pZ[index],pZ[index+1]);
+		interval X = interval(pX[index],pX[index+1]);
+		interval Y = interval(pY[index],pY[index+1]);
+		pFunction(Z, X, Y, 0);
+		pZ[index] = Z.inf; pZ[index+1] = Z.sup;
+		pX[index] = X.inf; pX[index+1] = X.sup;
+		pY[index] = Y.inf; pY[index+1] = Y.sup;
+	}
+}
+
+// Parameters : return value, box/vector<box>, box/vector<box>, nb elements, box size.
+inline void Cdefaultboxternarycontractor(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, void (*pFunction)(box&, box&, box&, int))
+{
+	for (unsigned int k = 0; k < nb; k++)
+	{
+		box Z(n), X(n), Y(n);
+		for (unsigned int i = 0; i < n; i++)
+		{
+			unsigned int index = 2*(n*k+i);
+			Z[i+1] = interval(pZ[index],pZ[index+1]);
+			X[i+1] = interval(pX[index],pX[index+1]);
+			Y[i+1] = interval(pY[index],pY[index+1]);
+		}
+		pFunction(Z, X, Y, 0);
+		for (unsigned int i = 0; i < n; i++)
+		{
+			unsigned int index = 2*(n*k+i);
+			pZ[index] = Z[i+1].inf; pZ[index+1] = Z[i+1].sup;
+			pX[index] = X[i+1].inf; pX[index+1] = X[i+1].sup;
+			pY[index] = Y[i+1].inf; pY[index+1] = Y[i+1].sup;
+		}
+	}
+}
+
 // Parameters : return value, interval/box/imatrix/vector<interval>/vector<box>, nb elements, box size, imatrix width.
 INTERVALX_ADAPT_API void Addx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
 {
@@ -64,42 +142,103 @@ INTERVALX_ADAPT_API void Addx(double* pZ, double* pX, double* pY, unsigned int n
 	}
 }
 
-// Parameters : interval/box/imatrix/vector<interval>/vector<box>, nb elements, box size, imatrix width.
 INTERVALX_ADAPT_API void Caddx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
 {
-	// imatrix not yet handled...
-
-	// vector
 	if (m == 1)
 	{
-		for (unsigned int k = 0; k < nb; k++)
+		if (n == 1) Cdefaultintervalternarycontractor(pZ, pX, pY, nb, Cadd);
+		else Cdefaultboxternarycontractor(pZ, pX, pY, nb, n, Cadd);
+	}
+	//else Cdefaultimatrixternarycontractor(pZ, pX, pY, nb, n, m, Cadd);
+}
+
+INTERVALX_ADAPT_API void Csubx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) Cdefaultintervalternarycontractor(pZ, pX, pY, nb, Csub);
+		else Cdefaultboxternarycontractor(pZ, pX, pY, nb, n, Csub);
+	}
+	//else Cdefaultimatrixternarycontractor(pZ, pX, pY, nb, n, m, Csub);
+}
+
+INTERVALX_ADAPT_API void Csqrx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Csqr);
+		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Csqr);
+	}
+	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Csqr);
+}
+
+INTERVALX_ADAPT_API void Cexpx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Cexp);
+		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Cexp);
+	}
+	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Cexp);
+}
+
+INTERVALX_ADAPT_API void Clogx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Clog);
+		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Clog);
+	}
+	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Clog);
+}
+
+INTERVALX_ADAPT_API void Cpowx(double* pY, double* pX, unsigned int n_exp, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) 
 		{
-			box Z(n);
-			box X(n);
-			box Y(n);
-
-			for (unsigned int i = 0; i < n; i++)
+			for (unsigned int k = 0; k < nb; k++)
 			{
-				unsigned int index = 2*(n*k+i);
-				Z[i+1] = interval(pZ[index],pZ[index+1]);
-				X[i+1] = interval(pX[index],pX[index+1]);
-				Y[i+1] = interval(pY[index],pY[index+1]);
-			}
-
-			Cadd(Z, X, Y);
-
-			for (unsigned int i = 0; i < n; i++)
-			{
-				unsigned int index = 2*(n*k+i);
-				pZ[index] = Z[i+1].inf;
-				pZ[index+1] = Z[i+1].sup;
-				pX[index] = X[i+1].inf;
-				pX[index+1] = X[i+1].sup;
-				pY[index] = Y[i+1].inf;
-				pY[index+1] = Y[i+1].sup;
+				unsigned int index = 2*k;
+				interval Y = interval(pY[index],pY[index+1]);
+				interval X = interval(pX[index],pX[index+1]);
+				Cpow(Y, X, n_exp);
+				pY[index] = Y.inf; pY[index+1] = Y.sup;
+				pX[index] = X.inf; pX[index+1] = X.sup;
 			}
 		}
 	}
+}
+
+INTERVALX_ADAPT_API void Ccosx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Ccos);
+		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Ccos);
+	}
+	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Ccos);
+}
+
+INTERVALX_ADAPT_API void Csinx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Csin);
+		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Csin);
+	}
+	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Csin);
+}
+
+INTERVALX_ADAPT_API void Ctanx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Ctan);
+		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Ctan);
+	}
+	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Ctan);
 }
 
 // Parameters : return value, box, box, box size.

@@ -7,8 +7,9 @@ function sivia_easibex()
 % end
 %------------------------------------------------------------------------
 function r=Cout(X) 
-  X1=X(1,:); X2=X(2,:); c=[0,0];
-  [X2,X1,c]=Cadd(X2,X1,c);
+  X1=X(1,:); X2=X(2,:); c=[2,2];
+  [X2,X1,c]=i_Csub(X2,X1,c);
+  %[X2,X1]=i_Csin(X2,X1);
   r=[X1;X2];
 end
 %------------------------------------------------------------------------
@@ -19,9 +20,9 @@ function sivia(X)
      %b=inside(X);
      %if     	b==[1 1], drawbox(X,'red','magenta');  
      %elseif 	b==[0 0], drawbox(X,'blue','black');  
-     if (Width(X)<0.1), drawbox(X,'yellow','yellow');    
+     if (i_Width(X)<0.25), drawbox(X,'yellow','yellow');    
      else
-         [X1,X2]=Bisect(X);
+         [X1,X2]=i_Bisect(X);
          sivia(X1);
          sivia(X2);
      end
