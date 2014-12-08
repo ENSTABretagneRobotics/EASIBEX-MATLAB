@@ -4,6 +4,10 @@ EXPORTS
    Addx
    Caddx
    Csubx
+   Cmulx
+   Cdivx
+   Cequalx
+   Cabsx
    Csqrx
    Cexpx
    Clogx

@@ -89,6 +89,21 @@
     <None Include="i_Width.m">
       <Filter>MATLAB</Filter>
     </None>
+    <None Include="i_Cabs.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cdiv.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cequal.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cmul.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cpow.m">
+      <Filter>MATLAB</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="intervalx_adapt.h">

@@ -108,12 +108,17 @@
     <None Include="intervalx_adapt.def" />
     <None Include="i_Add.m" />
     <None Include="i_Bisect.m" />
+    <None Include="i_Cabs.m" />
     <None Include="i_Cadd.m" />
     <None Include="i_Ccos.m" />
     <None Include="i_Cdefaultbinarycontractor.m" />
     <None Include="i_Cdefaultternarycontractor.m" />
+    <None Include="i_Cdiv.m" />
+    <None Include="i_Cequal.m" />
     <None Include="i_Cexp.m" />
+    <None Include="i_Cmul.m" />
     <None Include="i_Cnorm.m" />
+    <None Include="i_Cpow.m" />
     <None Include="i_Csin.m" />
     <None Include="i_Csqr.m" />
     <None Include="i_Csub.m" />

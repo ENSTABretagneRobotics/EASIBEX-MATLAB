@@ -162,6 +162,46 @@ INTERVALX_ADAPT_API void Csubx(double* pZ, double* pX, double* pY, unsigned int 
 	//else Cdefaultimatrixternarycontractor(pZ, pX, pY, nb, n, m, Csub);
 }
 
+INTERVALX_ADAPT_API void Cmulx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) Cdefaultintervalternarycontractor(pZ, pX, pY, nb, Cmul);
+		//else Cdefaultboxternarycontractor(pZ, pX, pY, nb, n, Cmul);
+	}
+	//else Cdefaultimatrixternarycontractor(pZ, pX, pY, nb, n, m, Cmul);
+}
+
+INTERVALX_ADAPT_API void Cdivx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) Cdefaultintervalternarycontractor(pZ, pX, pY, nb, Cdiv);
+		//else Cdefaultboxternarycontractor(pZ, pX, pY, nb, n, Cdiv);
+	}
+	//else Cdefaultimatrixternarycontractor(pZ, pX, pY, nb, n, m, Cdiv);
+}
+
+INTERVALX_ADAPT_API void Cequalx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Cequal);
+		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Cequal);
+	}
+	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Cequal);
+}
+
+INTERVALX_ADAPT_API void Cabsx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Cabs);
+		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Cabs);
+	}
+	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Cabs);
+}
+
 INTERVALX_ADAPT_API void Csqrx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
 {
 	if (m == 1)
