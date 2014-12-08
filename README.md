@@ -1,3 +1,5 @@
 EASIBEX-MATLAB
 ==============
-- Download a preview here : http://www.ensta-bretagne.fr/lebars/Share/EASIBEX-MATLAB_win32_bin_Preview.zip
+- In MATLAB, go to File\Set Path...\Add Folder... and add this folder.
+- Open sivia_easibex to test.
+- Check i_Add.m and the other files for usage information.
