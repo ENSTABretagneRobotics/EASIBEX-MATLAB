@@ -252,14 +252,6 @@
 		<Filter
 			Name="MATLAB"
 			>
-			<File
-				RelativePath=".\Cadd.m"
-				>
-			</File>
-			<File
-				RelativePath=".\Inter.m"
-				>
-			</File>
 		</Filter>
 		<File
 			RelativePath=".\TODO.txt"

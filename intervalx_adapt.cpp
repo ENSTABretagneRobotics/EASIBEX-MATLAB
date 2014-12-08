@@ -79,18 +79,14 @@ inline void Cdefaultboxternarycontractor(double* pZ, double* pX, double* pY, uns
 	}
 }
 
-// Parameters : return value, interval/box/imatrix/vector<interval>/vector<box>, nb elements, box size, imatrix width.
+// Parameters : return value, interval/box/imatrix/vector<interval>/vector<box>, interval/box/imatrix/vector<interval>/vector<box>, nb elements, box size, imatrix width.
 INTERVALX_ADAPT_API void Addx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
 {
-	// vector
 	if (m == 1)
 	{
 		for (unsigned int k = 0; k < nb; k++)
 		{
-			box Z(n);
-			box X(n);
-			box Y(n);
-
+			box Z(n), X(n), Y(n);
 			for (unsigned int i = 0; i < n; i++)
 			{
 				unsigned int index = 2*(n*k+i);
@@ -98,24 +94,17 @@ INTERVALX_ADAPT_API void Addx(double* pZ, double* pX, double* pY, unsigned int n
 				X[i+1] = interval(pX[index],pX[index+1]);
 				Y[i+1] = interval(pY[index],pY[index+1]);
 			}
-
 			Z = X + Y;
-
 			for (unsigned int i = 0; i < n; i++)
 			{
 				unsigned int index = 2*(n*k+i);
-				pZ[index] = Z[i+1].inf;
-				pZ[index+1] = Z[i+1].sup;
+				pZ[index] = Z[i+1].inf; pZ[index+1] = Z[i+1].sup;
 			}
 		}
 	}
-
-	// imatrix
-	if ((nb == 1)&&(m > 1))
+	else if (nb == 1)
 	{
-		imatrix Z(n,m);
-		imatrix X(n,m);
-		imatrix Y(n,m);
+		imatrix Z(n,m), X(n,m), Y(n,m);
 
 		for (unsigned int j = 0; j < m; j++)
 		{
@@ -127,16 +116,13 @@ INTERVALX_ADAPT_API void Addx(double* pZ, double* pX, double* pY, unsigned int n
 				Y.SetVal(i+1,j+1,interval(pY[index],pY[index+1]));
 			}
 		}
-
 		Z = X + Y;
-
 		for (unsigned int j = 0; j < m; j++)
 		{
 			for (unsigned int i = 0; i < n; i++)
 			{
 				unsigned int index = 2*(n*j+i);
-				pZ[index] = Z(i+1,j+1).inf;
-				pZ[index+1] = Z(i+1,j+1).sup;
+				pZ[index] = Z(i+1,j+1).inf; pZ[index+1] = Z(i+1,j+1).sup;
 			}
 		}
 	}
@@ -149,7 +135,7 @@ INTERVALX_ADAPT_API void Caddx(double* pZ, double* pX, double* pY, unsigned int 
 		if (n == 1) Cdefaultintervalternarycontractor(pZ, pX, pY, nb, Cadd);
 		else Cdefaultboxternarycontractor(pZ, pX, pY, nb, n, Cadd);
 	}
-	//else Cdefaultimatrixternarycontractor(pZ, pX, pY, nb, n, m, Cadd);
+	//else if (nb == 1) Cdefaultimatrixternarycontractor(pZ, pX, pY, nb, n, m, Cadd);
 }
 
 INTERVALX_ADAPT_API void Csubx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
@@ -159,7 +145,7 @@ INTERVALX_ADAPT_API void Csubx(double* pZ, double* pX, double* pY, unsigned int 
 		if (n == 1) Cdefaultintervalternarycontractor(pZ, pX, pY, nb, Csub);
 		else Cdefaultboxternarycontractor(pZ, pX, pY, nb, n, Csub);
 	}
-	//else Cdefaultimatrixternarycontractor(pZ, pX, pY, nb, n, m, Csub);
+	//else if (nb == 1) Cdefaultimatrixternarycontractor(pZ, pX, pY, nb, n, m, Csub);
 }
 
 INTERVALX_ADAPT_API void Cmulx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
@@ -169,7 +155,7 @@ INTERVALX_ADAPT_API void Cmulx(double* pZ, double* pX, double* pY, unsigned int 
 		if (n == 1) Cdefaultintervalternarycontractor(pZ, pX, pY, nb, Cmul);
 		//else Cdefaultboxternarycontractor(pZ, pX, pY, nb, n, Cmul);
 	}
-	//else Cdefaultimatrixternarycontractor(pZ, pX, pY, nb, n, m, Cmul);
+	//else if (nb == 1) Cdefaultimatrixternarycontractor(pZ, pX, pY, nb, n, m, Cmul);
 }
 
 INTERVALX_ADAPT_API void Cdivx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
@@ -179,7 +165,7 @@ INTERVALX_ADAPT_API void Cdivx(double* pZ, double* pX, double* pY, unsigned int 
 		if (n == 1) Cdefaultintervalternarycontractor(pZ, pX, pY, nb, Cdiv);
 		//else Cdefaultboxternarycontractor(pZ, pX, pY, nb, n, Cdiv);
 	}
-	//else Cdefaultimatrixternarycontractor(pZ, pX, pY, nb, n, m, Cdiv);
+	//else if (nb == 1) Cdefaultimatrixternarycontractor(pZ, pX, pY, nb, n, m, Cdiv);
 }
 
 INTERVALX_ADAPT_API void Cequalx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
@@ -189,7 +175,7 @@ INTERVALX_ADAPT_API void Cequalx(double* pY, double* pX, unsigned int nb, unsign
 		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Cequal);
 		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Cequal);
 	}
-	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Cequal);
+	//else if (nb == 1) Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Cequal);
 }
 
 INTERVALX_ADAPT_API void Cabsx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
@@ -199,7 +185,7 @@ INTERVALX_ADAPT_API void Cabsx(double* pY, double* pX, unsigned int nb, unsigned
 		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Cabs);
 		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Cabs);
 	}
-	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Cabs);
+	//else if (nb == 1) Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Cabs);
 }
 
 INTERVALX_ADAPT_API void Csqrx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
@@ -209,7 +195,7 @@ INTERVALX_ADAPT_API void Csqrx(double* pY, double* pX, unsigned int nb, unsigned
 		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Csqr);
 		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Csqr);
 	}
-	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Csqr);
+	//else if (nb == 1) Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Csqr);
 }
 
 INTERVALX_ADAPT_API void Cexpx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
@@ -219,7 +205,7 @@ INTERVALX_ADAPT_API void Cexpx(double* pY, double* pX, unsigned int nb, unsigned
 		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Cexp);
 		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Cexp);
 	}
-	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Cexp);
+	//else if (nb == 1) Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Cexp);
 }
 
 INTERVALX_ADAPT_API void Clogx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
@@ -229,7 +215,7 @@ INTERVALX_ADAPT_API void Clogx(double* pY, double* pX, unsigned int nb, unsigned
 		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Clog);
 		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Clog);
 	}
-	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Clog);
+	//else if (nb == 1) Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Clog);
 }
 
 INTERVALX_ADAPT_API void Cpowx(double* pY, double* pX, unsigned int n_exp, unsigned int nb, unsigned int n, unsigned int m)
@@ -258,7 +244,7 @@ INTERVALX_ADAPT_API void Ccosx(double* pY, double* pX, unsigned int nb, unsigned
 		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Ccos);
 		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Ccos);
 	}
-	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Ccos);
+	//else if (nb == 1) Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Ccos);
 }
 
 INTERVALX_ADAPT_API void Csinx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
@@ -268,7 +254,7 @@ INTERVALX_ADAPT_API void Csinx(double* pY, double* pX, unsigned int nb, unsigned
 		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Csin);
 		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Csin);
 	}
-	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Csin);
+	//else if (nb == 1) Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Csin);
 }
 
 INTERVALX_ADAPT_API void Ctanx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m)
@@ -278,7 +264,7 @@ INTERVALX_ADAPT_API void Ctanx(double* pY, double* pX, unsigned int nb, unsigned
 		if (n == 1) Cdefaultintervalbinarycontractor(pY, pX, nb, Ctan);
 		//else Cdefaultboxbinarycontractor(pY, pX, nb, n, Ctan);
 	}
-	//else Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Ctan);
+	//else if (nb == 1) Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Ctan);
 }
 
 // Parameters : return value, box, box, box size.
