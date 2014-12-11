@@ -20,6 +20,9 @@ INTERVALX_ADAPT_API void Cmaxx(double* pZ, double* pX, double* pY, unsigned int 
 INTERVALX_ADAPT_API void Cabsx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Csignx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Cchix(double* pZ, double* pW, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m);
+INTERVALX_ADAPT_API void Cgeqx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
+INTERVALX_ADAPT_API void Cintegerx(double* pX, unsigned int nb, unsigned int n, unsigned int m);
+INTERVALX_ADAPT_API void Cbooleanx(double* pX, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Csqrx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Cexpx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Clogx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
@@ -27,6 +30,14 @@ INTERVALX_ADAPT_API void Cpowx(double* pY, double* pX, unsigned int nb, unsigned
 INTERVALX_ADAPT_API void Ccosx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Csinx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Ctanx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
+INTERVALX_ADAPT_API void Catanx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
+INTERVALX_ADAPT_API void Cnormx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m);
+INTERVALX_ADAPT_API void Cnorm3Dx(double* pN, double* pX, double* pY, double* pZ, unsigned int nb, unsigned int n, unsigned int m);
+INTERVALX_ADAPT_API void Cdistx(double* pZ, double* pV, double* pW, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m);
+INTERVALX_ADAPT_API void Cscalx(double* pZ, double* pV, double* pW, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m);
+INTERVALX_ADAPT_API void Cdetx(double* pZ, double* pV, double* pW, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m);
+INTERVALX_ADAPT_API void CinRingx(double* pX, double* pY, double* pcx, double* pcy, double* pR, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Bisectx(double* pX, double* pX1, double* pX2, unsigned int n);
 INTERVALX_ADAPT_API void Widthx(double* pr, double* pX, unsigned int n);
 INTERVALX_ADAPT_API void Interx(double* pr, double* px, unsigned int nb, unsigned int n);
+INTERVALX_ADAPT_API void Unionx(double* pr, double* px, unsigned int nb, unsigned int n);

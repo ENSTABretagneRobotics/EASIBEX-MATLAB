@@ -188,14 +188,24 @@
     <None Include="i_Bisect.m" />
     <None Include="i_Cabs.m" />
     <None Include="i_Cadd.m" />
+    <None Include="i_Catan.m" />
+    <None Include="i_Cboolean.m" />
     <None Include="i_Ccos.m" />
     <None Include="i_Cdefaultbinarycontractor.m" />
+    <None Include="i_Cdefaultquaternarycontractor.m" />
+    <None Include="i_Cdefaultquinarycontractor.m" />
     <None Include="i_Cdefaultternarycontractor.m" />
+    <None Include="i_Cdefaultunarycontractor.m" />
     <None Include="i_Cdiv.m" />
     <None Include="i_Cequal.m" />
     <None Include="i_Cexp.m" />
+    <None Include="i_Cgeq.m" />
+    <None Include="i_Cinteger.m" />
+    <None Include="i_Cmax.m" />
+    <None Include="i_Cmin.m" />
     <None Include="i_Cmul.m" />
     <None Include="i_Cnorm.m" />
+    <None Include="i_Cnorm3D.m" />
     <None Include="i_Cpow.m" />
     <None Include="i_Csin.m" />
     <None Include="i_Csqr.m" />
@@ -203,6 +213,7 @@
     <None Include="i_Ctan.m" />
     <None Include="i_imatrix.m" />
     <None Include="i_Inter.m" />
+    <None Include="i_Union.m" />
     <None Include="i_Width.m" />
   </ItemGroup>
   <ItemGroup>

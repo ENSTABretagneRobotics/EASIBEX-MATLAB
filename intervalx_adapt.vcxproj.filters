@@ -41,9 +41,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="intervalx_adapt.def">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="i_Add.m">
       <Filter>MATLAB</Filter>
     </None>
@@ -102,6 +99,42 @@
       <Filter>MATLAB</Filter>
     </None>
     <None Include="i_Cpow.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="intervalx_adapt.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="i_Catan.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cboolean.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cdefaultquaternarycontractor.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cdefaultquinarycontractor.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cdefaultunarycontractor.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cgeq.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cinteger.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cmax.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cmin.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cnorm3D.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Union.m">
       <Filter>MATLAB</Filter>
     </None>
   </ItemGroup>

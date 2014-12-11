@@ -7,7 +7,14 @@ EXPORTS
    Cmulx
    Cdivx
    Cequalx
+   Cminx
+   Cmaxx
    Cabsx
+   Csignx
+   Cchix
+   Cgeqx
+   Cintegerx
+   Cbooleanx
    Csqrx
    Cexpx
    Clogx
@@ -15,6 +22,14 @@ EXPORTS
    Ccosx
    Csinx
    Ctanx
+   Catanx
+   Cnormx
+   Cnorm3Dx
+   Cdistx
+   Cscalx
+   Cdetx
+   CinRingx
    Bisectx
    Widthx
    Interx
+   Unionx

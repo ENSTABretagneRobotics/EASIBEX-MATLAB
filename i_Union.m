@@ -1,6 +1,6 @@
 % x = {[[-2,2];[2,4];[-4,1]];[[-1,5];[-5,8];[-7,2]];[[-1,1];[0,2];[1,2]];[[-2,2];[2,8];[-1,2]]}
-% r = i_Inter(x)
-function r = i_Inter(x)
+% r = i_Union(x)
+function r = i_Union(x)
 
 % Ideally, user should load manually...
 if not(libisloaded('intervalx_adapt'))
@@ -41,7 +41,7 @@ x = reshape(x', [1 2*n*nb]);
 pr = libpointer('doublePtr', r);
 px = libpointer('doublePtr', x);
 
-calllib('intervalx_adapt', 'Interx', pr, px, nb, n);
+calllib('intervalx_adapt', 'Unionx', pr, px, nb, n);
 
 r = reshape(pr.value, [2 n])';
 
