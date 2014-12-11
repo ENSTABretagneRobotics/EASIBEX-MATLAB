@@ -38,6 +38,9 @@ INTERVALX_ADAPT_API void Cscalx(double* pZ, double* pV, double* pW, double* pX, 
 INTERVALX_ADAPT_API void Cdetx(double* pZ, double* pV, double* pW, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void CinRingx(double* pX, double* pY, double* pcx, double* pcy, double* pR, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Bisectx(double* pX, double* pX1, double* pX2, unsigned int n);
-INTERVALX_ADAPT_API void Widthx(double* pr, double* pX, unsigned int n);
+INTERVALX_ADAPT_API void Widthx(double* py, double* pX, unsigned int nb, unsigned int n, unsigned int m);
+INTERVALX_ADAPT_API void Volumex(double* py, double* pX, unsigned int nb, unsigned int n, unsigned int m);
+INTERVALX_ADAPT_API void Anglex(double* pz, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m);
+INTERVALX_ADAPT_API void decreasex(double* pz, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Interx(double* pr, double* px, unsigned int nb, unsigned int n);
 INTERVALX_ADAPT_API void Unionx(double* pr, double* px, unsigned int nb, unsigned int n);

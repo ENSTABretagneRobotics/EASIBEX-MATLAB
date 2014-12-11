@@ -2,19 +2,18 @@
 #include "imatrix.h"
 
 // Parameters : double/vector<double> (return value), interval/vector<interval> (arg), nb elements.
-inline void defaultdoublefn1intervalarg(double* py, double* pX, unsigned int nb, double (*pFunction)(interval&))
+inline void defaultdoublefn1intervalarg(double* py, double* pX, unsigned int nb, double (*pFunction)(const interval&))
 {
 	for (unsigned int k = 0; k < nb; k++)
 	{
 		unsigned int index = 2*k;
 		interval X = interval(pX[index],pX[index+1]);
-		double y = pFunction(X);
-		py[k] = y;
+		py[k] = pFunction(X);
 	}
 }
 
 // Parameters : double/vector<double> (return value), box/vector<box> (arg), nb elements, box size.
-inline void defaultdoublefn1boxarg(double* py, double* pX, unsigned int nb, unsigned int n, double (*pFunction)(box&))
+inline void defaultdoublefn1boxarg(double* py, double* pX, unsigned int nb, unsigned int n, double (*pFunction)(const box&))
 {
 	for (unsigned int k = 0; k < nb; k++)
 	{
@@ -24,16 +23,28 @@ inline void defaultdoublefn1boxarg(double* py, double* pX, unsigned int nb, unsi
 			unsigned int index = 2*(n*k+i);
 			X[i+1] = interval(pX[index],pX[index+1]);
 		}
-		double y = pFunction(X);
+		py[k] = pFunction(X);
+	}
+}
+
+// Parameters : double/vector<double> (return value), box/vector<box> (arg), box/vector<box> (arg), nb elements, box size.
+inline void defaultdoublefn2boxarg(double* pz, double* pX, double* pY, unsigned int nb, unsigned int n, double (*pFunction)(const box&, const box&))
+{
+	for (unsigned int k = 0; k < nb; k++)
+	{
+		box X(n), Y(n);
 		for (unsigned int i = 0; i < n; i++)
 		{
-			py[k] = y;
+			unsigned int index = 2*(n*k+i);
+			X[i+1] = interval(pX[index],pX[index+1]);
+			Y[i+1] = interval(pY[index],pY[index+1]);
 		}
+		pz[k] = pFunction(X, Y);
 	}
 }
 
 // Parameters : interval/vector<interval> (return value), interval/vector<interval> (arg), nb elements.
-inline void defaultintervalfn1arg(double* pY, double* pX, unsigned int nb, interval (*pFunction)(interval&))
+inline void defaultintervalfn1arg(double* pY, double* pX, unsigned int nb, interval (*pFunction)(const interval&))
 {
 	for (unsigned int k = 0; k < nb; k++)
 	{
@@ -45,7 +56,7 @@ inline void defaultintervalfn1arg(double* pY, double* pX, unsigned int nb, inter
 }
 
 // Parameters : box/vector<box> (return value), box/vector<box> (arg), nb elements, box size.
-inline void defaultboxfn1arg(double* pY, double* pX, unsigned int nb, unsigned int n, box (*pFunction)(box&))
+inline void defaultboxfn1arg(double* pY, double* pX, unsigned int nb, unsigned int n, box (*pFunction)(const box&))
 {
 	for (unsigned int k = 0; k < nb; k++)
 	{
@@ -65,7 +76,7 @@ inline void defaultboxfn1arg(double* pY, double* pX, unsigned int nb, unsigned i
 }
 
 // Parameters : imatrix (return value), imatrix (arg), nb elements, box size, imatrix width.
-inline void defaultimatrixfn1arg(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m, imatrix (*pFunction)(imatrix&))
+inline void defaultimatrixfn1arg(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m, imatrix (*pFunction)(const imatrix&))
 {
 	if (nb != 1) return; // vector<imatrix> unsupported.
 	imatrix X(n,m);
@@ -89,7 +100,7 @@ inline void defaultimatrixfn1arg(double* pY, double* pX, unsigned int nb, unsign
 }
 
 // Parameters : interval/vector<interval> (return value), interval/vector<interval> (arg), interval/vector<interval> (arg), nb elements.
-inline void defaultintervalfn2arg(double* pZ, double* pX, double* pY, unsigned int nb, interval (*pFunction)(interval&, interval&))
+inline void defaultintervalfn2arg(double* pZ, double* pX, double* pY, unsigned int nb, interval (*pFunction)(const interval&, const interval&))
 {
 	for (unsigned int k = 0; k < nb; k++)
 	{
@@ -102,7 +113,7 @@ inline void defaultintervalfn2arg(double* pZ, double* pX, double* pY, unsigned i
 }
 
 // Parameters : box/vector<box> (return value), box/vector<box> (arg), box/vector<box> (arg), nb elements, box size.
-inline void defaultboxfn2arg(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, box (*pFunction)(box&, box&))
+inline void defaultboxfn2arg(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, box (*pFunction)(const box&, const box&))
 {
 	for (unsigned int k = 0; k < nb; k++)
 	{
@@ -814,17 +825,44 @@ INTERVALX_ADAPT_API void Bisectx(double* pX, double* pX1, double* pX2, unsigned 
 	}
 }
 
-// Parameters : double, box, box size.
-INTERVALX_ADAPT_API void Widthx(double* pr, double* pX, unsigned int n)
+// Parameters : double, interval/box/vector<interval>/vector<box>, box size.
+INTERVALX_ADAPT_API void Widthx(double* py, double* pX, unsigned int nb, unsigned int n, unsigned int m)
 {
-	double r = 0; box X(n);
-	for (unsigned int i = 0; i < n; i++)
+	if (m == 1)
 	{
-		unsigned int index = 2*i;
-		X[i+1] = interval(pX[index],pX[index+1]);
+		if (n == 1) defaultdoublefn1intervalarg(py, pX, nb, Width);
+		else defaultdoublefn1boxarg(py, pX, nb, n, Width);
 	}
-	r = Width(X);
-	*pr = r;
+	//else if (nb == 1) defaultdoublefn1boxarg(py, pX, nb, n, m, Width);
+}
+
+// Parameters : double, interval/box/vector<interval>/vector<box>, box size.
+INTERVALX_ADAPT_API void Volumex(double* py, double* pX, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) defaultdoublefn1intervalarg(py, pX, nb, Volume);
+		else defaultdoublefn1boxarg(py, pX, nb, n, Volume);
+	}
+	//else if (nb == 1) defaultdoublefn1boxarg(py, pX, nb, n, m, Volume);
+}
+
+// Parameters : double, box/vector<box>, box/vector<box>, box size.
+INTERVALX_ADAPT_API void Anglex(double* pz, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 2) defaultdoublefn2boxarg(pz, pX, pY, nb, n, Angle);
+	}
+}
+
+// Parameters : double, interval/box/vector<interval>/vector<box>, interval/box/vector<interval>/vector<box>, box size.
+INTERVALX_ADAPT_API void decreasex(double* pz, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n >= 1) defaultdoublefn2boxarg(pz, pX, pY, nb, n, decrease);
+	}
 }
 
 // Parameters : box, vector<interval>/vector<box>, nb elements, box size.
