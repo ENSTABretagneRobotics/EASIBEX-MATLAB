@@ -168,6 +168,27 @@
     <None Include="easibex_setup_x64.m">
       <Filter>MATLAB</Filter>
     </None>
+    <None Include="i_Cnotin.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cortho.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_defaultboolfn2arg.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Disjoint.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Sub.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Subset.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_SubsetStrict.m">
+      <Filter>MATLAB</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="intervalx_adapt.h">

@@ -214,6 +214,8 @@
     <None Include="i_Cmul.m" />
     <None Include="i_Cnorm.m" />
     <None Include="i_Cnorm3D.m" />
+    <None Include="i_Cnotin.m" />
+    <None Include="i_Cortho.m" />
     <None Include="i_Cpow.m" />
     <None Include="i_Cscal.m" />
     <None Include="i_Csign.m" />
@@ -222,10 +224,15 @@
     <None Include="i_Csub.m" />
     <None Include="i_Ctan.m" />
     <None Include="i_decrease.m" />
+    <None Include="i_defaultboolfn2arg.m" />
     <None Include="i_defaultdoublefn1arg.m" />
     <None Include="i_defaultdoublefn2arg.m" />
+    <None Include="i_Disjoint.m" />
     <None Include="i_imatrix.m" />
     <None Include="i_Inter.m" />
+    <None Include="i_Sub.m" />
+    <None Include="i_Subset.m" />
+    <None Include="i_SubsetStrict.m" />
     <None Include="i_Union.m" />
     <None Include="i_Volume.m" />
     <None Include="i_Width.m" />

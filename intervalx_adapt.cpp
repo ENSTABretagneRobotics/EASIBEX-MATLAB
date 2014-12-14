@@ -43,6 +43,34 @@ inline void defaultdoublefn2boxarg(double* pz, double* pX, double* pY, unsigned 
 	}
 }
 
+// Parameters : double/vector<double> (return value), interval/vector<interval> (arg), interval/vector<interval> (arg), nb elements.
+inline void defaultboolfn2intervalarg(double* pz, double* pX, double* pY, unsigned int nb, bool (*pFunction)(const interval&, const interval&))
+{
+	for (unsigned int k = 0; k < nb; k++)
+	{
+		unsigned int index = 2*k;
+		interval X = interval(pX[index],pX[index+1]);
+		interval Y = interval(pY[index],pY[index+1]);
+		pz[k] = (double)pFunction(X, Y);
+	}
+}
+
+// Parameters : double/vector<double> (return value), box/vector<box> (arg), box/vector<box> (arg), nb elements, box size.
+inline void defaultboolfn2boxarg(double* pz, double* pX, double* pY, unsigned int nb, unsigned int n, bool (*pFunction)(const box&, const box&))
+{
+	for (unsigned int k = 0; k < nb; k++)
+	{
+		box X(n), Y(n);
+		for (unsigned int i = 0; i < n; i++)
+		{
+			unsigned int index = 2*(n*k+i);
+			X[i+1] = interval(pX[index],pX[index+1]);
+			Y[i+1] = interval(pY[index],pY[index+1]);
+		}
+		pz[k] = (double)pFunction(X, Y);
+	}
+}
+
 // Parameters : interval/vector<interval> (return value), interval/vector<interval> (arg), nb elements.
 inline void defaultintervalfn1arg(double* pY, double* pX, unsigned int nb, interval (*pFunction)(const interval&))
 {
@@ -432,6 +460,167 @@ INTERVALX_ADAPT_API void Addx(double* pZ, double* pX, double* pY, unsigned int n
 	}
 }
 
+// Parameters : return value, interval/box/imatrix/vector<interval>/vector<box>, interval/box/imatrix/vector<interval>/vector<box>, nb elements, box size, imatrix width.
+INTERVALX_ADAPT_API void Subx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		for (unsigned int k = 0; k < nb; k++)
+		{
+			box Z(n), X(n), Y(n);
+			for (unsigned int i = 0; i < n; i++)
+			{
+				unsigned int index = 2*(n*k+i);
+				Z[i+1] = interval(pZ[index],pZ[index+1]);
+				X[i+1] = interval(pX[index],pX[index+1]);
+				Y[i+1] = interval(pY[index],pY[index+1]);
+			}
+			Z = X - Y;
+			for (unsigned int i = 0; i < n; i++)
+			{
+				unsigned int index = 2*(n*k+i);
+				pZ[index] = Z[i+1].inf; pZ[index+1] = Z[i+1].sup;
+			}
+		}
+	}
+	else if (nb == 1)
+	{
+		imatrix Z(n,m), X(n,m), Y(n,m);
+
+		for (unsigned int j = 0; j < m; j++)
+		{
+			for (unsigned int i = 0; i < n; i++)
+			{
+				unsigned int index = 2*(n*j+i);
+				Z.SetVal(i+1,j+1,interval(pZ[index],pZ[index+1]));
+				X.SetVal(i+1,j+1,interval(pX[index],pX[index+1]));
+				Y.SetVal(i+1,j+1,interval(pY[index],pY[index+1]));
+			}
+		}
+		Z = X - Y;
+		for (unsigned int j = 0; j < m; j++)
+		{
+			for (unsigned int i = 0; i < n; i++)
+			{
+				unsigned int index = 2*(n*j+i);
+				pZ[index] = Z(i+1,j+1).inf; pZ[index+1] = Z(i+1,j+1).sup;
+			}
+		}
+	}
+}
+
+// Parameters : box, vector<interval>/vector<box>, nb elements, box size.
+INTERVALX_ADAPT_API void Interx(double* pr, double* px, unsigned int nb, unsigned int n)
+{
+	box r(n); vector<box> x(nb, r);
+	for (unsigned int k = 0; k < nb; k++)
+	{
+		for (unsigned int i = 0; i < n; i++)
+		{
+			unsigned int index = 2*(n*k+i);
+			r[i+1] = interval(px[index],px[index+1]);
+		}
+		x[k] = r;
+	}
+	r = Inter(x);
+	for (unsigned int i = 0; i < n; i++)
+	{
+		unsigned int index = 2*i;
+		pr[index] = r[i+1].inf; pr[index+1] = r[i+1].sup;
+	}
+}
+
+// Parameters : box, vector<interval>/vector<box>, nb elements, box size.
+INTERVALX_ADAPT_API void Unionx(double* pr, double* px, unsigned int nb, unsigned int n)
+{
+	box r(n); vector<box> x(nb, r);
+	for (unsigned int k = 0; k < nb; k++)
+	{
+		for (unsigned int i = 0; i < n; i++)
+		{
+			unsigned int index = 2*(n*k+i);
+			r[i+1] = interval(px[index],px[index+1]);
+		}
+		x[k] = r;
+	}
+	r = Union(x);
+	for (unsigned int i = 0; i < n; i++)
+	{
+		unsigned int index = 2*i;
+		pr[index] = r[i+1].inf; pr[index+1] = r[i+1].sup;
+	}
+}
+
+// Parameters : double, interval/box/vector<interval>/vector<box>, box size.
+INTERVALX_ADAPT_API void Widthx(double* py, double* pX, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) defaultdoublefn1intervalarg(py, pX, nb, Width);
+		else defaultdoublefn1boxarg(py, pX, nb, n, Width);
+	}
+	//else if (nb == 1) defaultdoublefn1boxarg(py, pX, nb, n, m, Width);
+}
+
+// Parameters : double, interval/box/vector<interval>/vector<box>, box size.
+INTERVALX_ADAPT_API void Volumex(double* py, double* pX, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) defaultdoublefn1intervalarg(py, pX, nb, Volume);
+		else defaultdoublefn1boxarg(py, pX, nb, n, Volume);
+	}
+	//else if (nb == 1) defaultdoublefn1boxarg(py, pX, nb, n, m, Volume);
+}
+
+// Parameters : double, box/vector<box>, box/vector<box>, box size.
+INTERVALX_ADAPT_API void Anglex(double* pz, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 2) defaultdoublefn2boxarg(pz, pX, pY, nb, n, Angle);
+	}
+}
+
+// Parameters : double, interval/box/vector<interval>/vector<box>, interval/box/vector<interval>/vector<box>, box size.
+INTERVALX_ADAPT_API void Disjointx(double* pz, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) defaultboolfn2intervalarg(pz, pX, pY, nb, Disjoint);
+		else defaultboolfn2boxarg(pz, pX, pY, nb, n, Disjoint);
+	}
+}
+
+// Parameters : double, interval/box/vector<interval>/vector<box>, interval/box/vector<interval>/vector<box>, box size.
+INTERVALX_ADAPT_API void Subsetx(double* pz, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) defaultboolfn2intervalarg(pz, pX, pY, nb, Subset);
+		else defaultboolfn2boxarg(pz, pX, pY, nb, n, Subset);
+	}
+}
+
+// Parameters : double, interval/box/vector<interval>/vector<box>, interval/box/vector<interval>/vector<box>, box size.
+INTERVALX_ADAPT_API void SubsetStrictx(double* pz, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) defaultboolfn2intervalarg(pz, pX, pY, nb, SubsetStrict);
+		else defaultboolfn2boxarg(pz, pX, pY, nb, n, SubsetStrict);
+	}
+}
+
+// Parameters : double, interval/box/vector<interval>/vector<box>, interval/box/vector<interval>/vector<box>, box size.
+INTERVALX_ADAPT_API void decreasex(double* pz, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n >= 1) defaultdoublefn2boxarg(pz, pX, pY, nb, n, decrease);
+	}
+}
+
 INTERVALX_ADAPT_API void Caddx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
 {
 	if (m == 1)
@@ -807,6 +996,24 @@ INTERVALX_ADAPT_API void CinRingx(double* pX, double* pY, double* pcx, double* p
 	}
 }
 
+INTERVALX_ADAPT_API void Corthox(double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		Cdefaultboxbinarycontractor(pX, pY, nb, n, Cortho);
+	}
+}
+
+INTERVALX_ADAPT_API void Cnotinx(double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) Cdefaultintervalbinarycontractor(pX, pY, nb, Cnotin);
+		else Cdefaultboxbinarycontractor(pX, pY, nb, n, Cnotin);
+	}
+	//else if (nb == 1) Cdefaultimatrixbinarycontractor(pY, pX, nb, n, m, Catan);
+}
+
 // Parameters : box, box, box, box size.
 INTERVALX_ADAPT_API void Bisectx(double* pX, double* pX1, double* pX2, unsigned int n)
 {
@@ -822,87 +1029,5 @@ INTERVALX_ADAPT_API void Bisectx(double* pX, double* pX1, double* pX2, unsigned 
 		unsigned int index = 2*i;
 		pX1[index] = X1[i+1].inf; pX1[index+1] = X1[i+1].sup;
 		pX2[index] = X2[i+1].inf; pX2[index+1] = X2[i+1].sup;
-	}
-}
-
-// Parameters : double, interval/box/vector<interval>/vector<box>, box size.
-INTERVALX_ADAPT_API void Widthx(double* py, double* pX, unsigned int nb, unsigned int n, unsigned int m)
-{
-	if (m == 1)
-	{
-		if (n == 1) defaultdoublefn1intervalarg(py, pX, nb, Width);
-		else defaultdoublefn1boxarg(py, pX, nb, n, Width);
-	}
-	//else if (nb == 1) defaultdoublefn1boxarg(py, pX, nb, n, m, Width);
-}
-
-// Parameters : double, interval/box/vector<interval>/vector<box>, box size.
-INTERVALX_ADAPT_API void Volumex(double* py, double* pX, unsigned int nb, unsigned int n, unsigned int m)
-{
-	if (m == 1)
-	{
-		if (n == 1) defaultdoublefn1intervalarg(py, pX, nb, Volume);
-		else defaultdoublefn1boxarg(py, pX, nb, n, Volume);
-	}
-	//else if (nb == 1) defaultdoublefn1boxarg(py, pX, nb, n, m, Volume);
-}
-
-// Parameters : double, box/vector<box>, box/vector<box>, box size.
-INTERVALX_ADAPT_API void Anglex(double* pz, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
-{
-	if (m == 1)
-	{
-		if (n == 2) defaultdoublefn2boxarg(pz, pX, pY, nb, n, Angle);
-	}
-}
-
-// Parameters : double, interval/box/vector<interval>/vector<box>, interval/box/vector<interval>/vector<box>, box size.
-INTERVALX_ADAPT_API void decreasex(double* pz, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
-{
-	if (m == 1)
-	{
-		if (n >= 1) defaultdoublefn2boxarg(pz, pX, pY, nb, n, decrease);
-	}
-}
-
-// Parameters : box, vector<interval>/vector<box>, nb elements, box size.
-INTERVALX_ADAPT_API void Interx(double* pr, double* px, unsigned int nb, unsigned int n)
-{
-	box r(n); vector<box> x(nb, r);
-	for (unsigned int k = 0; k < nb; k++)
-	{
-		for (unsigned int i = 0; i < n; i++)
-		{
-			unsigned int index = 2*(n*k+i);
-			r[i+1] = interval(px[index],px[index+1]);
-		}
-		x[k] = r;
-	}
-	r = Inter(x);
-	for (unsigned int i = 0; i < n; i++)
-	{
-		unsigned int index = 2*i;
-		pr[index] = r[i+1].inf; pr[index+1] = r[i+1].sup;
-	}
-}
-
-// Parameters : box, vector<interval>/vector<box>, nb elements, box size.
-INTERVALX_ADAPT_API void Unionx(double* pr, double* px, unsigned int nb, unsigned int n)
-{
-	box r(n); vector<box> x(nb, r);
-	for (unsigned int k = 0; k < nb; k++)
-	{
-		for (unsigned int i = 0; i < n; i++)
-		{
-			unsigned int index = 2*(n*k+i);
-			r[i+1] = interval(px[index],px[index+1]);
-		}
-		x[k] = r;
-	}
-	r = Union(x);
-	for (unsigned int i = 0; i < n; i++)
-	{
-		unsigned int index = 2*i;
-		pr[index] = r[i+1].inf; pr[index+1] = r[i+1].sup;
 	}
 }
