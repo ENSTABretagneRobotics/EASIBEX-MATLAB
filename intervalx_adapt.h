@@ -1,4 +1,7 @@
-#ifdef _MSC_VER
+#ifndef INTERVALX_ADAPT_H
+#define INTERVALX_ADAPT_H
+
+#ifdef _WIN32
 #ifdef INTERVALX_ADAPT_EXPORTS
 #define INTERVALX_ADAPT_API __declspec(dllexport) 
 #else
@@ -6,7 +9,11 @@
 #endif // INTERVALX_ADAPT_EXPORTS
 #else
 #define INTERVALX_ADAPT_API 
-#endif // _MSC_VER
+#endif // _WIN32
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 INTERVALX_ADAPT_API void Addx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m);
 //INTERVALX_ADAPT_API void Subx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m);
@@ -26,7 +33,7 @@ INTERVALX_ADAPT_API void Cbooleanx(double* pX, unsigned int nb, unsigned int n, 
 INTERVALX_ADAPT_API void Csqrx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Cexpx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Clogx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
-INTERVALX_ADAPT_API void Cpowx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
+INTERVALX_ADAPT_API void Cpowx(double* pY, double* pX, unsigned int n_exp, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Ccosx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Csinx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Ctanx(double* pY, double* pX, unsigned int nb, unsigned int n, unsigned int m);
@@ -44,3 +51,9 @@ INTERVALX_ADAPT_API void Anglex(double* pz, double* pX, double* pY, unsigned int
 INTERVALX_ADAPT_API void decreasex(double* pz, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m);
 INTERVALX_ADAPT_API void Interx(double* pr, double* px, unsigned int nb, unsigned int n);
 INTERVALX_ADAPT_API void Unionx(double* pr, double* px, unsigned int nb, unsigned int n);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // INTERVALX_ADAPT_H

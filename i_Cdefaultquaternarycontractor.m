@@ -2,7 +2,12 @@ function [Z, X, Y] = i_Cdefaultquaternarycontractor(Z_p, W_p, X_p, Y_p, function
 
 % Ideally, user should load manually...
 if not(libisloaded('intervalx_adapt'))
-    loadlibrary('intervalx_adapt');
+    switch (computer)
+        case 'PCWIN64'
+            loadlibrary('intervalx_adapt', @intervalx_adapt_proto);
+        otherwise
+            loadlibrary('intervalx_adapt');
+    end
 end
 
 %libfunctions intervalx_adapt -full

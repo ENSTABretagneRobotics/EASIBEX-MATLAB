@@ -3,7 +3,12 @@ function [X1, X2] = i_Bisect(X_p)
 
 % Ideally, user should load manually...
 if not(libisloaded('intervalx_adapt'))
-    loadlibrary('intervalx_adapt');
+    switch (computer)
+        case 'PCWIN64'
+            loadlibrary('intervalx_adapt', @intervalx_adapt_proto);
+        otherwise
+            loadlibrary('intervalx_adapt');
+    end
 end
 
 %libfunctions intervalx_adapt -full
