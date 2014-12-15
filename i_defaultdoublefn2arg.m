@@ -37,7 +37,7 @@ elseif (isfloat(X_p) == 1)
         m = 1;
     end
 else
-    error('Error : Unhandled parameter type.');
+    error('Error : Unhandled argument type.');
 end
 
 % Shape conversions suitable for the pointers to send to the library.

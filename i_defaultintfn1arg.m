@@ -46,7 +46,7 @@ end
 y = repmat(NaN, [1 nb]);
 X_p = reshape(X_p', [1 2*n*nb*m]);
 
-py = libpointer('doublePtr', y);
+py = libpointer('int32Ptr', y);
 pX_p = libpointer('doublePtr', X_p);
 
 calllib('intervalx_adapt', function_p, py, pX_p, nb, n, m);

@@ -1,7 +1,4 @@
 function [Y, X] = i_Cpow(Y_p, X_p, n_exp)
-if (nargin ~= 3)
-    error('Error : Wrong number of parameters.');
-end
 
 % Ideally, user should load manually...
 if not(libisloaded('intervalx_adapt'))
@@ -40,7 +37,7 @@ elseif (isfloat(X_p) == 1)
         m = 1;
     end
 else
-    error('Error : Unhandled parameter type.');
+    error('Error : Unhandled argument type.');
 end
 
 % Shape conversions suitable for the pointers to send to the library.

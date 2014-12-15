@@ -1,4 +1,4 @@
-function y = i_defaultdoublefn1arg(X_p, function_p)
+function y = i_defaultboolfn1arg(X_p, function_p)
 
 % Ideally, user should load manually...
 if not(libisloaded('intervalx_adapt'))
@@ -51,7 +51,7 @@ pX_p = libpointer('doublePtr', X_p);
 
 calllib('intervalx_adapt', function_p, py, pX_p, nb, n, m);
 
-y = py.value;
+y = logical(py.value); % Convert to bool.
 
 % Conversions to human-readable format.
 if (nb > 1)

@@ -14,13 +14,6 @@ end
 
 %libfunctions intervalx_adapt -full
 
-switch nargin
-    case 1
-        ;
-    otherwise
-        error('Error : Wrong number of parameters.');
-end
-
 size_x = size(x);
 
 if (iscell(x) == 1)
@@ -33,7 +26,7 @@ elseif (isfloat(x) == 1)
     nb = 1;
     n = size_x(1); % Box dimension (should be 1 for interval).
 else
-    error('Error : Unhandled parameter type.');
+    error('Error : Unhandled argument type.');
 end
 
 % Shape conversions suitable for the pointers to send to the library.

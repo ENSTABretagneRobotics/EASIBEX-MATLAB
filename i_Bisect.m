@@ -13,13 +13,6 @@ end
 
 %libfunctions intervalx_adapt -full
 
-switch nargin
-    case 1
-        ;
-    otherwise
-        error('Error : Wrong number of parameters.');
-end
-
 size_X_p = size(X_p);
 n = size_X_p(1); % Box dimension.
 

@@ -42,6 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
+    <None Include="easibex_init.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="easibex_setup_x64.m">
+      <Filter>MATLAB</Filter>
+    </None>
     <None Include="i_Add.m">
       <Filter>MATLAB</Filter>
     </None>
@@ -49,6 +55,9 @@
       <Filter>MATLAB</Filter>
     </None>
     <None Include="i_Bisect.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_C_q_in.m">
       <Filter>MATLAB</Filter>
     </None>
     <None Include="i_Cabs.m">
@@ -90,6 +99,9 @@
     <None Include="i_Cdiv.m">
       <Filter>MATLAB</Filter>
     </None>
+    <None Include="i_Center.m">
+      <Filter>MATLAB</Filter>
+    </None>
     <None Include="i_Cequal.m">
       <Filter>MATLAB</Filter>
     </None>
@@ -117,6 +129,12 @@
     <None Include="i_Cnorm3D.m">
       <Filter>MATLAB</Filter>
     </None>
+    <None Include="i_Cnotin.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Cortho.m">
+      <Filter>MATLAB</Filter>
+    </None>
     <None Include="i_Cpow.m">
       <Filter>MATLAB</Filter>
     </None>
@@ -141,16 +159,61 @@
     <None Include="i_decrease.m">
       <Filter>MATLAB</Filter>
     </None>
+    <None Include="i_defaultboolfn1arg.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_defaultboolfn2arg.m">
+      <Filter>MATLAB</Filter>
+    </None>
     <None Include="i_defaultdoublefn1arg.m">
       <Filter>MATLAB</Filter>
     </None>
     <None Include="i_defaultdoublefn2arg.m">
       <Filter>MATLAB</Filter>
     </None>
+    <None Include="i_defaultfn1arg.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_defaultfn2arg.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_defaultintfn1arg.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Disjoint.m">
+      <Filter>MATLAB</Filter>
+    </None>
     <None Include="i_imatrix.m">
       <Filter>MATLAB</Filter>
     </None>
+    <None Include="i_Inf.m">
+      <Filter>MATLAB</Filter>
+    </None>
     <None Include="i_Inter.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_IsBox.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Rad.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Size.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Sub.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Subset.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_SubsetStrict.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Sup.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_ToReal.m">
       <Filter>MATLAB</Filter>
     </None>
     <None Include="i_Union.m">
@@ -162,31 +225,10 @@
     <None Include="i_Width.m">
       <Filter>MATLAB</Filter>
     </None>
-    <None Include="easibex_init.m">
+    <None Include="i_CinRing.m">
       <Filter>MATLAB</Filter>
     </None>
-    <None Include="easibex_setup_x64.m">
-      <Filter>MATLAB</Filter>
-    </None>
-    <None Include="i_Cnotin.m">
-      <Filter>MATLAB</Filter>
-    </None>
-    <None Include="i_Cortho.m">
-      <Filter>MATLAB</Filter>
-    </None>
-    <None Include="i_defaultboolfn2arg.m">
-      <Filter>MATLAB</Filter>
-    </None>
-    <None Include="i_Disjoint.m">
-      <Filter>MATLAB</Filter>
-    </None>
-    <None Include="i_Sub.m">
-      <Filter>MATLAB</Filter>
-    </None>
-    <None Include="i_Subset.m">
-      <Filter>MATLAB</Filter>
-    </None>
-    <None Include="i_SubsetStrict.m">
+    <None Include="i_Update.m">
       <Filter>MATLAB</Filter>
     </None>
   </ItemGroup>

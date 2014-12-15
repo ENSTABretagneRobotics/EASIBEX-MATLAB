@@ -1,4 +1,4 @@
-function z = i_defaultboolfn2arg(X_p, Y_p, function_p)
+function [X, Y] = i_CinRing(X_p, Y_p, cx, cy, R)
 
 % Ideally, user should load manually...
 if not(libisloaded('intervalx_adapt'))
@@ -12,26 +12,28 @@ end
 
 %libfunctions intervalx_adapt -full
 
-size_Y_p = size(Y_p);
-size_X_p = size(X_p);
-if (size_Y_p ~= size_X_p)
+size_cx = size(cx);
+size_cy = size(cy);
+size_R = size(R);
+if ((size_cx ~= size_cy) | (size_cx ~= size_R))
     error('Error : Sizes must match.');
 end
 
-if (iscell(X_p) == 1)
+if (iscell(cx) == 1)
     % vector<interval> or vector<box>.
-    nb = size_X_p(1); % Number of elements in the vector.
-    s = size(X_p{1});
+    nb = size_cx(1); % Number of elements in the vector.
+    s = size(cx{1});
     n = s(1); % Box dimension (should be 1 for interval).
     m = 1; % Number of columns in the imatrix (should be 1 for interval and box, vector<imatrix> unsupported).
-elseif (isfloat(X_p) == 1)
+elseif (isfloat(cx) == 1)
     % interval, box or imatrix.
     nb = 1;
-    n = size_X_p(1); % Box dimension (should be 1 for interval).
-    s = size(size_X_p);
+    n = size_cx(1); % Box dimension (should be 1 for interval).
+    s = size(size_cx);
     if (s(2) == 3)
         % imatrix
-        m = size_X_p(3);
+        m = size_cx(3);
+        error('Error : Unhandled argument type.');
     else
         % interval or box
         m = 1;
@@ -40,31 +42,36 @@ else
     error('Error : Unhandled argument type.');
 end
 
-% Shape conversions suitable for the pointers to send to the library.
-if (nb > 1)
-    X_p = cell2mat(X_p);
-    Y_p = cell2mat(Y_p);
+if (n > 1)
+    error('Error : Unhandled argument type.');
 end
-if (m > 1)
-    X_p = reshape(permute(X_p, [1 3 2]), [n*nb*m 2]);
-    Y_p = reshape(permute(Y_p, [1 3 2]), [n*nb*m 2]);
-end
-z = repmat(NaN, [1 nb]);
-X_p = reshape(X_p', [1 2*n*nb*m]);
-Y_p = reshape(Y_p', [1 2*n*nb*m]);
 
-pz = libpointer('doublePtr', z);
+% Shape conversions suitable for the pointers to send to the library.
+X_p = reshape(X_p', [1 2]);
+Y_p = reshape(Y_p', [1 2]);
+if (nb > 1)
+    cx = cell2mat(cx);
+    cy = cell2mat(cy);
+    R = cell2mat(R);
+end
+cx = reshape(cx', [1 nb]);
+cy = reshape(cy', [1 nb]);
+R = reshape(R', [1 2*nb]);
+
 pX_p = libpointer('doublePtr', X_p);
 pY_p = libpointer('doublePtr', Y_p);
+pcx = libpointer('doublePtr', cx);
+pcy = libpointer('doublePtr', cy);
+pR = libpointer('doublePtr', R);
 
-calllib('intervalx_adapt', function_p, pz, pX_p, pY_p, nb, n, m);
+calllib('intervalx_adapt', 'CinRingx', pX_p, pY_p, pcx, pcy, pR, nb, n, m);
 
-z = logical(pz.value); % Convert to bool.
+X = pX_p.value;
+Y = pY_p.value;
 
 % Conversions to human-readable format.
-if (nb > 1)
-    z = mat2cell(z,ones(1,nb));
-end
+X = reshape(X, [2 1])';
+Y = reshape(Y, [2 1])';
 
 % To remove in release, user should unload manually, but should not be
 % important if it is not unloaded...
