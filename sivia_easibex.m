@@ -14,11 +14,19 @@ function r=Cout(X)
   r=[X1;X2];
 end
 %------------------------------------------------------------------------
+function r=Cin(X) 
+  X1=X(1,:); X2=X(2,:);
+  [Xa1,Xa2]=i_CinRing(X1,X2,1,2,[-1,1]);
+  [Xb1,Xb2]=i_CinRing(X1,X2,1,2,[1.5,Inf]);
+  r=i_Union({[Xa1;Xa2];[Xb1;Xb2]});
+end
+%------------------------------------------------------------------------
 function sivia(X)
      X0=X;
      drawbox(X,'blue','black');  
      X=Cout(X);
      drawbox(X,'red','magenta');  
+     X=Cin(X);
      %b=inside(X);
      %if     	b==[1 1], drawbox(X,'red','magenta');  
      %elseif 	b==[0 0], drawbox(X,'blue','black');  
