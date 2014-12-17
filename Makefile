@@ -5,7 +5,7 @@
 # and you will likely have to launch MATLAB using something similar to this : 
 # LD_PRELOAD=/usr/lib64/libstdc++.so.6 matlab
 # to force it to run using the system default version of C++ Standard Library (otherwise MATLAB might use its 
-# own version, that is very likely to be different from the one used when you built the shared libraries)...
+# own version, which is very likely to be different from the one used when you built the shared libraries)...
 
 LIB = intervalx_adapt.so
 
