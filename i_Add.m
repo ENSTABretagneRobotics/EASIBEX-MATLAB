@@ -21,6 +21,8 @@
 % This will be represented by a MATLAB cell array.
 % x{4}(3,:) would be [-1,2].
 
+% iboolean : itrue -> [1,1], ifalse -> [0,0], iperhaps -> [0,1].
+
 % Ideally, you should call : 
 % easibex_init
 % in the beginning (otherwise the initialization will be done when necessary but might take several seconds), and :

@@ -101,6 +101,43 @@ inline void defaultboolfn2boxarg(double* pz, double* pX, double* pY, unsigned in
 	}
 }
 
+// Parameters : iboolean/vector<iboolean> (return value), interval/vector<interval> (arg), interval/vector<interval> (arg), nb elements.
+inline void defaultibooleanfn2intervalarg(double* pZ, double* pX, double* pY, unsigned int nb, iboolean (*pFunction)(const interval&, const interval&))
+{
+	for (unsigned int k = 0; k < nb; k++)
+	{
+		unsigned int index = 2*k;
+		interval X = interval(pX[index],pX[index+1]);
+		interval Y = interval(pY[index],pY[index+1]);
+		iboolean Z = pFunction(X, Y);
+		pZ[index] = NAN; pZ[index+1] = NAN;
+		if (Z == itrue) { pZ[index] = 1; pZ[index+1] = 1; }
+		if (Z == ifalse) { pZ[index] = 0; pZ[index+1] = 0; }
+		if (Z == iperhaps) { pZ[index] = 0; pZ[index+1] = 1; }
+	}		
+}
+
+// Parameters : iboolean/vector<iboolean> (return value), box/vector<box> (arg), box/vector<box> (arg), nb elements, box size.
+inline void defaultibooleanfn2boxarg(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, iboolean (*pFunction)(const box&, const box&))
+{
+	for (unsigned int k = 0; k < nb; k++)
+	{
+		box X(n), Y(n);
+		for (unsigned int i = 0; i < n; i++)
+		{
+			unsigned int index = 2*(n*k+i);
+			X[i+1] = interval(pX[index],pX[index+1]);
+			Y[i+1] = interval(pY[index],pY[index+1]);
+		}
+		iboolean Z = pFunction(X, Y);
+		unsigned int index = 2*k;
+		pZ[index] = NAN; pZ[index+1] = NAN;
+		if (Z == itrue) { pZ[index] = 1; pZ[index+1] = 1; }
+		if (Z == ifalse) { pZ[index] = 0; pZ[index+1] = 0; }
+		if (Z == iperhaps) { pZ[index] = 0; pZ[index+1] = 1; }
+	}
+}
+
 // Parameters : interval/vector<interval> (return value), interval/vector<interval> (arg), nb elements.
 inline void defaultintervalfn1arg(double* pY, double* pX, unsigned int nb, interval (*pFunction)(const interval&))
 {
@@ -138,18 +175,18 @@ inline void defaultimatrixfn1arg(double* pY, double* pX, unsigned int nb, unsign
 {
 	if (nb != 1) return; // vector<imatrix> unsupported.
 	imatrix X(n,m);
-	for (unsigned int j = 0; j < m; j++)
+	for (unsigned int i = 0; i < n; i++)
 	{
-		for (unsigned int i = 0; i < n; i++)
+		for (unsigned int j = 0; j < m; j++)
 		{
 			unsigned int index = 2*(n*j+i);
 			X.SetVal(i+1,j+1,interval(pX[index],pX[index+1]));
 		}
 	}
 	imatrix Y = pFunction(X);
-	for (unsigned int j = 0; j < m; j++)
+	for (unsigned int i = 0; i < n; i++)
 	{
-		for (unsigned int i = 0; i < n; i++)
+		for (unsigned int j = 0; j < m; j++)
 		{
 			unsigned int index = 2*(n*j+i);
 			pY[index] = Y(i+1,j+1).inf; pY[index+1] = Y(i+1,j+1).sup;
@@ -228,18 +265,18 @@ inline void Cdefaultimatrixunarycontractor(double* pX, unsigned int nb, unsigned
 {
 	if (nb != 1) return; // vector<imatrix> unsupported.
 	imatrix X(n,m);
-	for (unsigned int j = 0; j < m; j++)
+	for (unsigned int i = 0; i < n; i++)
 	{
-		for (unsigned int i = 0; i < n; i++)
+		for (unsigned int j = 0; j < m; j++)
 		{
 			unsigned int index = 2*(n*j+i);
 			X.SetVal(i+1,j+1,interval(pX[index],pX[index+1]));
 		}
 	}
 	pFunction(X);
-	for (unsigned int j = 0; j < m; j++)
+	for (unsigned int i = 0; i < n; i++)
 	{
-		for (unsigned int i = 0; i < n; i++)
+		for (unsigned int j = 0; j < m; j++)
 		{
 			unsigned int index = 2*(n*j+i);
 			pX[index] = X(i+1,j+1).inf; pX[index+1] = X(i+1,j+1).sup;
@@ -288,9 +325,9 @@ inline void Cdefaultimatrixbinarycontractor(double* pY, double* pX, unsigned int
 {
 	if (nb != 1) return; // vector<imatrix> unsupported.
 	imatrix Y(n,m), X(n,m);
-	for (unsigned int j = 0; j < m; j++)
+	for (unsigned int i = 0; i < n; i++)
 	{
-		for (unsigned int i = 0; i < n; i++)
+		for (unsigned int j = 0; j < m; j++)
 		{
 			unsigned int index = 2*(n*j+i);
 			Y.SetVal(i+1,j+1,interval(pY[index],pY[index+1]));
@@ -298,9 +335,9 @@ inline void Cdefaultimatrixbinarycontractor(double* pY, double* pX, unsigned int
 		}
 	}
 	pFunction(Y, X);
-	for (unsigned int j = 0; j < m; j++)
+	for (unsigned int i = 0; i < n; i++)
 	{
-		for (unsigned int i = 0; i < n; i++)
+		for (unsigned int j = 0; j < m; j++)
 		{
 			unsigned int index = 2*(n*j+i);
 			pY[index] = Y(i+1,j+1).inf; pY[index+1] = Y(i+1,j+1).sup;
@@ -354,9 +391,9 @@ inline void Cdefaultimatrixternarycontractor(double* pZ, double* pX, double* pY,
 {
 	if (nb != 1) return; // vector<imatrix> unsupported.
 	imatrix Z(n,m), X(n,m), Y(n,m);
-	for (unsigned int j = 0; j < m; j++)
+	for (unsigned int i = 0; i < n; i++)
 	{
-		for (unsigned int i = 0; i < n; i++)
+		for (unsigned int j = 0; j < m; j++)
 		{
 			unsigned int index = 2*(n*j+i);
 			Z.SetVal(i+1,j+1,interval(pZ[index],pZ[index+1]));
@@ -365,9 +402,9 @@ inline void Cdefaultimatrixternarycontractor(double* pZ, double* pX, double* pY,
 		}
 	}
 	pFunction(Z, X, Y);
-	for (unsigned int j = 0; j < m; j++)
+	for (unsigned int i = 0; i < n; i++)
 	{
-		for (unsigned int i = 0; i < n; i++)
+		for (unsigned int j = 0; j < m; j++)
 		{
 			unsigned int index = 2*(n*j+i);
 			pZ[index] = Z(i+1,j+1).inf; pZ[index+1] = Z(i+1,j+1).sup;
@@ -574,6 +611,32 @@ INTERVALX_ADAPT_API void Mulx(double* pZ, double* pX, double* pY, unsigned int n
 				unsigned int index = 2*(n*j+i);
 				pZ[index] = Z(i+1,j+1).inf; pZ[index+1] = Z(i+1,j+1).sup;
 			}
+		}
+	}
+}
+
+// Parameters : box (return value), imatrix, box, nb elements, box size, imatrix width.
+INTERVALX_ADAPT_API void Mulimatrixboxx(double* pc, double* pA, double* pb, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if ((m > 1)&&(nb == 1))
+	{
+		imatrix A(n,m);
+		box b(n), c(n);
+		for (unsigned int i = 0; i < n; i++)
+		{
+			unsigned int index = 2*i;
+			b[i+1] = interval(pb[index],pb[index+1]);
+			for (unsigned int j = 0; j < m; j++)
+			{
+				unsigned int index = 2*(n*j+i);
+				A.SetVal(i+1,j+1,interval(pA[index],pA[index+1]));
+			}
+		}
+		c = A * b;
+		for (unsigned int i = 0; i < n; i++)
+		{
+			unsigned int index = 2*i;
+			pc[index] = c[i+1].inf; pc[index+1] = c[i+1].sup;
 		}
 	}
 }
@@ -797,6 +860,16 @@ INTERVALX_ADAPT_API void SubsetStrictx(double* pz, double* pX, double* pY, unsig
 	}
 }
 
+// Parameters : iboolean/vector<iboolean> (return value), interval/box/vector<interval>/vector<box> (arg), interval/box/vector<interval>/vector<box> (arg), box size.
+INTERVALX_ADAPT_API void Inx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if (m == 1)
+	{
+		if (n == 1) defaultibooleanfn2intervalarg(pZ, pX, pY, nb, In);
+		else defaultibooleanfn2boxarg(pZ, pX, pY, nb, n, In);
+	}
+}
+
 // Parameters : double/vector<double> (return value), interval/box/vector<interval>/vector<box> (arg), interval/box/vector<interval>/vector<box> (arg), box size.
 INTERVALX_ADAPT_API void decreasex(double* pz, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)
 {
@@ -834,6 +907,38 @@ INTERVALX_ADAPT_API void Cmulx(double* pZ, double* pX, double* pY, unsigned int 
 		//else Cdefaultboxternarycontractor(pZ, pX, pY, nb, n, Cmul);
 	}
 	else if (nb == 1) Cdefaultimatrixternarycontractor(pZ, pX, pY, nb, n, m, Cmul);
+}
+
+INTERVALX_ADAPT_API void Cmulimatrixboxx(double* pc, double* pA, double* pb, unsigned int nb, unsigned int n, unsigned int m)
+{
+	if ((m > 1)&&(nb == 1))
+	{
+		imatrix A(n,m);
+		box b(n), c(n);
+		for (unsigned int i = 0; i < n; i++)
+		{
+			unsigned int index = 2*i;
+			b[i+1] = interval(pb[index],pb[index+1]);
+			c[i+1] = interval(pc[index],pc[index+1]);
+			for (unsigned int j = 0; j < m; j++)
+			{
+				unsigned int index = 2*(n*j+i);
+				A.SetVal(i+1,j+1,interval(pA[index],pA[index+1]));
+			}
+		}
+		Cmul(c, A, b);
+		for (unsigned int i = 0; i < n; i++)
+		{
+			unsigned int index = 2*i;
+			pb[index] = b[i+1].inf; pb[index+1] = b[i+1].sup;
+			pc[index] = c[i+1].inf; pc[index+1] = c[i+1].sup;
+			for (unsigned int j = 0; j < m; j++)
+			{
+				unsigned int index = 2*(n*j+i);
+				pA[index] = A(i+1,j+1).inf; pA[index+1] = A(i+1,j+1).sup;
+			}
+		}
+	}
 }
 
 INTERVALX_ADAPT_API void Cdivx(double* pZ, double* pX, double* pY, unsigned int nb, unsigned int n, unsigned int m)

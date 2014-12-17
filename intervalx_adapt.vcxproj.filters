@@ -231,6 +231,24 @@
     <None Include="i_Update.m">
       <Filter>MATLAB</Filter>
     </None>
+    <None Include="i_Cmulimatrixbox.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Div.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Mul.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_Mulimatrixbox.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_defaultibooleanfn2arg.m">
+      <Filter>MATLAB</Filter>
+    </None>
+    <None Include="i_In.m">
+      <Filter>MATLAB</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="intervalx_adapt.h">

@@ -31,7 +31,7 @@ else
     error('Error : Unhandled argument type.');
 end
 
-if (n ~= size_x_p)
+if (n ~= size_x_p(1))
     error('Error : Box sizes must match.');
 end
 

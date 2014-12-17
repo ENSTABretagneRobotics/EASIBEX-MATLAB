@@ -521,6 +521,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\i_Cmulimatrixbox.m"
+				>
+			</File>
+			<File
 				RelativePath=".\i_Cnorm.m"
 				>
 			</File>
@@ -593,6 +597,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\i_defaultibooleanfn2arg.m"
+				>
+			</File>
+			<File
 				RelativePath=".\i_defaultintfn1arg.m"
 				>
 			</File>
@@ -609,6 +617,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\i_In.m"
+				>
+			</File>
+			<File
 				RelativePath=".\i_Inf.m"
 				>
 			</File>
@@ -622,6 +634,10 @@
 			</File>
 			<File
 				RelativePath=".\i_Mul.m"
+				>
+			</File>
+			<File
+				RelativePath=".\i_Mulimatrixbox.m"
 				>
 			</File>
 			<File

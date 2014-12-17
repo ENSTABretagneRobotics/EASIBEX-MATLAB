@@ -214,6 +214,7 @@
     <None Include="i_Cmax.m" />
     <None Include="i_Cmin.m" />
     <None Include="i_Cmul.m" />
+    <None Include="i_Cmulimatrixbox.m" />
     <None Include="i_Cnorm.m" />
     <None Include="i_Cnorm3D.m" />
     <None Include="i_Cnotin.m" />
@@ -233,12 +234,17 @@
     <None Include="i_defaultdoublefn2arg.m" />
     <None Include="i_defaultfn1arg.m" />
     <None Include="i_defaultfn2arg.m" />
+    <None Include="i_defaultibooleanfn2arg.m" />
     <None Include="i_defaultintfn1arg.m" />
     <None Include="i_Disjoint.m" />
+    <None Include="i_Div.m" />
     <None Include="i_imatrix.m" />
+    <None Include="i_In.m" />
     <None Include="i_Inf.m" />
     <None Include="i_Inter.m" />
     <None Include="i_IsBox.m" />
+    <None Include="i_Mul.m" />
+    <None Include="i_Mulimatrixbox.m" />
     <None Include="i_Rad.m" />
     <None Include="i_Size.m" />
     <None Include="i_Sub.m" />

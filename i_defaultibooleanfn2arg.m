@@ -1,4 +1,4 @@
-function Z = i_defaultfn2arg(X_p, Y_p, function_p)
+function Z = i_defaultibooleanfn2arg(X_p, Y_p, function_p)
 
 % Ideally, user should load manually...
 if not(libisloaded('intervalx_adapt'))
@@ -41,7 +41,7 @@ else
 end
 
 % Shape conversions suitable for the pointers to send to the library.
-Z = repmat(NaN, [1 2*n*nb*m]);
+Z = repmat(NaN, [1 2*nb]);
 if (nb > 1)
     Y_p = cell2mat(Y_p);
     X_p = cell2mat(X_p);
@@ -62,12 +62,9 @@ calllib('intervalx_adapt', function_p, pZ, pX_p, pY_p, nb, n, m);
 Z = pZ.value;
 
 % Conversions to human-readable format.
-Z = reshape(Z, [2 n*nb*m])';
-if (m > 1)
-    Z = permute(reshape(Z, [n nb*m 2]), [1 3 2]);
-end
+Z = reshape(Z, [2 nb])';
 if (nb > 1)
-    Z = mat2cell(Z,n*ones(1,nb));
+    Z = mat2cell(Z,ones(1,nb));
 end
 
 % To remove in release, user should unload manually, but should not be
