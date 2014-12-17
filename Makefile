@@ -1,3 +1,12 @@
+# You will need to build ibex as a shared library (see ibex documentation) to be able to build this library.
+# Then, put all the built libraries (intervalx_adapt.so, libibex.so, libsoplex.so, libprim.so.0) in this folder.
+# Type : 
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/Ibex/EASIBEX-MATLAB-master
+# and you will likely have to launch MATLAB using something similar to this : 
+# LD_PRELOAD=/usr/lib64/libstdc++.so.6 matlab
+# to force it to run using the system default version of C++ Standard Library (otherwise MATLAB might use its 
+# own version, that is very likely to be different from the one used when you built the shared libraries)...
+
 LIB = intervalx_adapt.so
 
 CC = g++
