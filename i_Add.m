@@ -1,6 +1,10 @@
 % To define an interval :
 % x = [-2,2]
 % x(1,2) would be 2.
+% Empty : 
+% x = [NaN,NaN]
+% Infinity : 
+% x = [-Inf,Inf]
 
 % To define a box :
 % x = [[-2,2];[2,4];[-4,1]]
