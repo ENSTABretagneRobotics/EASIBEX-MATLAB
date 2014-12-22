@@ -12,9 +12,9 @@ end
 
 %libfunctions intervalx_adapt -full
 
-size_Y_p = size(Y_p);
 size_X_p = size(X_p);
-if (size_Y_p ~= size_X_p)
+size_Y_p = size(Y_p);
+if (size_X_p ~= size_Y_p)
     error('Error : Sizes must match.');
 end
 
@@ -43,19 +43,19 @@ end
 % Shape conversions suitable for the pointers to send to the library.
 Z = repmat(NaN, [1 2*n*nb*m]);
 if (nb > 1)
-    Y_p = cell2mat(Y_p);
     X_p = cell2mat(X_p);
+    Y_p = cell2mat(Y_p);
 end
 if (m > 1)
-    Y_p = reshape(permute(Y_p, [1 3 2]), [n*nb*m 2]);
     X_p = reshape(permute(X_p, [1 3 2]), [n*nb*m 2]);
+    Y_p = reshape(permute(Y_p, [1 3 2]), [n*nb*m 2]);
 end
-Y_p = reshape(Y_p', [1 2*n*nb*m]);
 X_p = reshape(X_p', [1 2*n*nb*m]);
+Y_p = reshape(Y_p', [1 2*n*nb*m]);
 
 pZ = libpointer('doublePtr', Z);
-pY_p = libpointer('doublePtr', Y_p);
 pX_p = libpointer('doublePtr', X_p);
+pY_p = libpointer('doublePtr', Y_p);
 
 calllib('intervalx_adapt', function_p, pZ, pX_p, pY_p, nb, n, m);
 

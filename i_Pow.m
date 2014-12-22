@@ -1,4 +1,4 @@
-function [X, Y] = i_CinRing(X_p, Y_p, cx, cy, R)
+function Y = i_Pow(X_p, n_exp)
 
 % Ideally, user should load manually...
 if not(libisloaded('intervalx_adapt'))
@@ -13,13 +13,6 @@ end
 %libfunctions intervalx_adapt -full
 
 size_X_p = size(X_p);
-size_Y_p = size(Y_p);
-size_cx = size(cx);
-size_cy = size(cy);
-size_R = size(R);
-if ((size_X_p ~= size_Y_p) | (size_X_p ~= size_cx) | (size_X_p ~= size_cy) | (size_X_p ~= size_R))
-    error('Error : Sizes must match.');
-end
 
 if (iscell(X_p) == 1)
     % vector<interval> or vector<box>.
@@ -35,7 +28,6 @@ elseif (isfloat(X_p) == 1)
     if (s(2) == 3)
         % imatrix
         m = size_X_p(3);
-        error('Error : Unhandled argument type.');
     else
         % interval or box
         m = 1;
@@ -44,41 +36,33 @@ else
     error('Error : Unhandled argument type.');
 end
 
-if (n > 1)
-    error('Error : Unhandled argument type.');
-end
-
 % Shape conversions suitable for the pointers to send to the library.
+Y = repmat(NaN, [1 2*n*nb*m]);
 if (nb > 1)
     X_p = cell2mat(X_p);
-    Y_p = cell2mat(Y_p);
-    cx = cell2mat(cx);
-    cy = cell2mat(cy);
-    R = cell2mat(R);
+    n_exp = cell2mat(n_exp);
 end
-X_p = reshape(X_p', [1 2*nb]);
-Y_p = reshape(Y_p', [1 2*nb]);
-cx = reshape(cx', [1 nb]);
-cy = reshape(cy', [1 nb]);
-R = reshape(R', [1 2*nb]);
+if (m > 1)
+    X_p = reshape(permute(X_p, [1 3 2]), [n*nb*m 2]);
+end
+X_p = reshape(X_p', [1 2*n*nb*m]);
+n_exp = reshape(n_exp', [1 nb]);
 
+pY = libpointer('doublePtr', Y);
 pX_p = libpointer('doublePtr', X_p);
-pY_p = libpointer('doublePtr', Y_p);
-pcx = libpointer('doublePtr', cx);
-pcy = libpointer('doublePtr', cy);
-pR = libpointer('doublePtr', R);
+pn_exp = libpointer('doublePtr', n_exp);
 
-calllib('intervalx_adapt', 'CinRingx', pX_p, pY_p, pcx, pcy, pR, nb, n, m);
+calllib('intervalx_adapt', 'Powx', pY, pX_p, pn_exp, nb, n, m);
 
-X = pX_p.value;
-Y = pY_p.value;
+Y = pY.value;
 
 % Conversions to human-readable format.
-X = reshape(X, [2 nb])';
-Y = reshape(Y, [2 nb])';
+Y = reshape(Y, [2 n*nb*m])';
+if (m > 1)
+    Y = permute(reshape(Y, [n nb*m 2]), [1 3 2]);
+end
 if (nb > 1)
-    X = mat2cell(X,ones(1,nb));
-    Y = mat2cell(Y,ones(1,nb));
+    Y = mat2cell(Y,n*ones(1,nb));
 end
 
 % To remove in release, user should unload manually, but should not be

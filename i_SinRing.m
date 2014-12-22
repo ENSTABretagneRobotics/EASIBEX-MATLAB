@@ -1,4 +1,4 @@
-function [X, Y] = i_CinRing(X_p, Y_p, cx, cy, R)
+function [X, Y] = i_SinRing(X_p, Y_p, cx, cy, R, outer)
 
 % Ideally, user should load manually...
 if not(libisloaded('intervalx_adapt'))
@@ -17,7 +17,8 @@ size_Y_p = size(Y_p);
 size_cx = size(cx);
 size_cy = size(cy);
 size_R = size(R);
-if ((size_X_p ~= size_Y_p) | (size_X_p ~= size_cx) | (size_X_p ~= size_cy) | (size_X_p ~= size_R))
+size_outer = size(outer);
+if ((size_X_p ~= size_Y_p) | (size_X_p ~= size_cx) | (size_X_p ~= size_cy) | (size_X_p ~= size_R) | (size_X_p ~= size_outer))
     error('Error : Sizes must match.');
 end
 
@@ -55,20 +56,23 @@ if (nb > 1)
     cx = cell2mat(cx);
     cy = cell2mat(cy);
     R = cell2mat(R);
+    outer = cell2mat(outer);
 end
 X_p = reshape(X_p', [1 2*nb]);
 Y_p = reshape(Y_p', [1 2*nb]);
 cx = reshape(cx', [1 nb]);
 cy = reshape(cy', [1 nb]);
 R = reshape(R', [1 2*nb]);
+outer = reshape(outer', [1 nb]);
 
 pX_p = libpointer('doublePtr', X_p);
 pY_p = libpointer('doublePtr', Y_p);
 pcx = libpointer('doublePtr', cx);
 pcy = libpointer('doublePtr', cy);
 pR = libpointer('doublePtr', R);
+pbOuter = libpointer('int32Ptr', outer);
 
-calllib('intervalx_adapt', 'CinRingx', pX_p, pY_p, pcx, pcy, pR, nb, n, m);
+calllib('intervalx_adapt', 'SinRingx', pX_p, pY_p, pcx, pcy, pR, pbOuter, nb, n, m);
 
 X = pX_p.value;
 Y = pY_p.value;

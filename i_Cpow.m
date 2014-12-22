@@ -44,6 +44,7 @@ end
 if (nb > 1)
     Y_p = cell2mat(Y_p);
     X_p = cell2mat(X_p);
+    n_exp = cell2mat(n_exp);
 end
 if (m > 1)
     Y_p = reshape(permute(Y_p, [1 3 2]), [n*nb*m 2]);
@@ -51,11 +52,13 @@ if (m > 1)
 end
 Y_p = reshape(Y_p', [1 2*n*nb*m]);
 X_p = reshape(X_p', [1 2*n*nb*m]);
+n_exp = reshape(n_exp', [1 nb]);
 
 pY_p = libpointer('doublePtr', Y_p);
 pX_p = libpointer('doublePtr', X_p);
+pn_exp = libpointer('int32Ptr', n_exp);
 
-calllib('intervalx_adapt', 'Cpowx', pY_p, pX_p, n_exp, nb, n, m);
+calllib('intervalx_adapt', 'Cpowx', pY_p, pX_p, pn_exp, nb, n, m);
 
 Y = pY_p.value;
 X = pX_p.value;

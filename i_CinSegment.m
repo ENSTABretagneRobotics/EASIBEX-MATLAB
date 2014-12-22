@@ -1,4 +1,4 @@
-function [X, Y] = i_CinRing(X_p, Y_p, cx, cy, R)
+function [X, Y] = i_CinSegment(X_p, Y_p, ax, ay, bx, by)
 
 % Ideally, user should load manually...
 if not(libisloaded('intervalx_adapt'))
@@ -14,10 +14,11 @@ end
 
 size_X_p = size(X_p);
 size_Y_p = size(Y_p);
-size_cx = size(cx);
-size_cy = size(cy);
-size_R = size(R);
-if ((size_X_p ~= size_Y_p) | (size_X_p ~= size_cx) | (size_X_p ~= size_cy) | (size_X_p ~= size_R))
+size_ax = size(ax);
+size_ay = size(ay);
+size_bx = size(bx);
+size_by = size(by);
+if ((size_X_p ~= size_Y_p) | (size_X_p ~= size_ax) | (size_X_p ~= size_ay) | (size_X_p ~= size_bx) | (size_X_p ~= size_by))
     error('Error : Sizes must match.');
 end
 
@@ -52,23 +53,26 @@ end
 if (nb > 1)
     X_p = cell2mat(X_p);
     Y_p = cell2mat(Y_p);
-    cx = cell2mat(cx);
-    cy = cell2mat(cy);
-    R = cell2mat(R);
+    ax = cell2mat(ax);
+    ay = cell2mat(ay);
+    bx = cell2mat(bx);
+    by = cell2mat(by);
 end
 X_p = reshape(X_p', [1 2*nb]);
 Y_p = reshape(Y_p', [1 2*nb]);
-cx = reshape(cx', [1 nb]);
-cy = reshape(cy', [1 nb]);
-R = reshape(R', [1 2*nb]);
+ax = reshape(ax', [1 nb]);
+ay = reshape(ay', [1 nb]);
+bx = reshape(bx', [1 nb]);
+by = reshape(by', [1 nb]);
 
 pX_p = libpointer('doublePtr', X_p);
 pY_p = libpointer('doublePtr', Y_p);
-pcx = libpointer('doublePtr', cx);
-pcy = libpointer('doublePtr', cy);
-pR = libpointer('doublePtr', R);
+pax = libpointer('doublePtr', ax);
+pay = libpointer('doublePtr', ay);
+pbx = libpointer('doublePtr', bx);
+pby = libpointer('doublePtr', by);
 
-calllib('intervalx_adapt', 'CinRingx', pX_p, pY_p, pcx, pcy, pR, nb, n, m);
+calllib('intervalx_adapt', 'CinSegmentx', pX_p, pY_p, pax, pay, pbx, pby, nb, n, m);
 
 X = pX_p.value;
 Y = pY_p.value;

@@ -1,4 +1,4 @@
-function [X, Y] = i_CinRing(X_p, Y_p, cx, cy, R)
+function [X, Y] = i_CinCircle(X_p, Y_p, cx, cy, r)
 
 % Ideally, user should load manually...
 if not(libisloaded('intervalx_adapt'))
@@ -16,8 +16,8 @@ size_X_p = size(X_p);
 size_Y_p = size(Y_p);
 size_cx = size(cx);
 size_cy = size(cy);
-size_R = size(R);
-if ((size_X_p ~= size_Y_p) | (size_X_p ~= size_cx) | (size_X_p ~= size_cy) | (size_X_p ~= size_R))
+size_r = size(r);
+if ((size_X_p ~= size_Y_p) | (size_X_p ~= size_cx) | (size_X_p ~= size_cy) | (size_X_p ~= size_r))
     error('Error : Sizes must match.');
 end
 
@@ -54,21 +54,21 @@ if (nb > 1)
     Y_p = cell2mat(Y_p);
     cx = cell2mat(cx);
     cy = cell2mat(cy);
-    R = cell2mat(R);
+    r = cell2mat(r);
 end
 X_p = reshape(X_p', [1 2*nb]);
 Y_p = reshape(Y_p', [1 2*nb]);
 cx = reshape(cx', [1 nb]);
 cy = reshape(cy', [1 nb]);
-R = reshape(R', [1 2*nb]);
+r = reshape(r', [1 nb]);
 
 pX_p = libpointer('doublePtr', X_p);
 pY_p = libpointer('doublePtr', Y_p);
 pcx = libpointer('doublePtr', cx);
 pcy = libpointer('doublePtr', cy);
-pR = libpointer('doublePtr', R);
+pr = libpointer('doublePtr', r);
 
-calllib('intervalx_adapt', 'CinRingx', pX_p, pY_p, pcx, pcy, pR, nb, n, m);
+calllib('intervalx_adapt', 'CinCirclex', pX_p, pY_p, pcx, pcy, pr, nb, n, m);
 
 X = pX_p.value;
 Y = pY_p.value;
