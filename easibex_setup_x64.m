@@ -4,7 +4,7 @@
 % correctly configured in MATLAB (using mex -setup and mex -setup C++ in
 % MATLAB).
 % These files will be necessary for MATLAB 64 bit users that do not have
-% Visual Studio. 
+% Visual Studio (they should be provided in the x64 folder). 
 % Note that this problem does not exist for MATLAB 32 bit (for several 
 % reasons, such as the fact that it is provided with a 32 bit internal 
 % compiler and therefore do not need Visual Studio...).
