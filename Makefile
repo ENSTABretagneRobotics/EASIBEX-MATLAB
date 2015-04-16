@@ -1,13 +1,27 @@
-# You will need to build ibex as a shared library (see ibex documentation) to be able to build this library.
-# Then, put all the built libraries (intervalx_adapt.so, libibex.so, libsoplex.so, libprim.so.0) in this folder.
-# Type something similar to : 
+# You will need to build Ibex as a shared library (see Ibex documentation) to be able to build this library.
+# For Mac, if you get errors in files from matrix_lib, try this modification line 97 in tnt_sparse_matrix_csr.h : 
+# rowptr_(M, r), colind_(nz, c) -> rowptr_(M, *r), colind_(nz, *c)
+# Then, put all the built libraries (intervalx_adapt.so/.dylib, libibex.so/dylib, libsoplex.so/.dylib, libprim.so/.dylib.0) 
+# in this folder (.so for Linux, .dylib for Mac, libsoplex and libprim might not be necessary depending on your Ibex 
+# version or options).
+#
+# For Linux, type in a terminal something similar to : 
 # export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/EASIBEX-MATLAB-master
 # to enable MATLAB to find the libraries, and you will probably have to launch MATLAB using something similar to this : 
 # LD_PRELOAD=/usr/lib64/libstdc++.so.6 matlab
 # to force it to run using the system default version of the C++ Standard Library (otherwise MATLAB might use its 
 # own version, which is likely to be different from the one used when you built the shared libraries)...
+# For Mac, type in a terminal something similar to : 
+# export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:~/EASIBEX-MATLAB-master
+# to enable MATLAB to find the libraries, and launch MATLAB from the same terminal.
+#
+# In MATLAB, go to File\Set Path...\Add Folder... and add this folder.
+# Run sivia_easibex.m to test. 
+# Check i_Add.m and the other files for usage information.
 
+# Change here depending on your OS (.so for Linux, .dylib for Mac).
 LIB = intervalx_adapt.so
+#LIB = intervalx_adapt.dylib
 
 CC = g++
 CFLAGS += -fPIC
