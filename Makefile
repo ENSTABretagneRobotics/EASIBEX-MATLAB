@@ -1,8 +1,8 @@
-# You will need to build Ibex as a shared library (see Ibex documentation) to be able to build this library.
+# You will need to build IBEX as a shared library (see IBEX documentation) to be able to build this library.
 # For Mac, if you get errors in files from matrix_lib, try this modification line 97 in tnt_sparse_matrix_csr.h : 
 # rowptr_(M, r), colind_(nz, c) -> rowptr_(M, *r), colind_(nz, *c)
 # Then, put all the built libraries (intervalx_adapt.so/.dylib, libibex.so/dylib, libsoplex.so/.dylib, libprim.so/.0.dylib) 
-# in this folder (.so for Linux, .dylib for Mac, libsoplex and libprim might not be necessary depending on your Ibex 
+# in this folder (.so for Linux, .dylib for Mac, libsoplex and libprim might not be necessary depending on your IBEX 
 # version or options).
 #
 # For Linux, type in a terminal something similar to : 
