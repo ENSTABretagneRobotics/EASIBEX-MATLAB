@@ -13,7 +13,8 @@ Mac :
 export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:~/EASIBEX-MATLAB-master/mac
 to enable MATLAB to find the libraries, and launch MATLAB from the terminal.
 - In MATLAB, go to File\Set Path...\Add Folder... and add this folder as well as mac folder.
-- Run sivia_easibex.m to test. If you get errors, close MATLAB, delete the content of the provided mac folder and follow the instructions in the Makefile.
+- Run sivia_easibex.m to test. If you get errors, close MATLAB, delete the provided mac folder and follow the instructions in the Makefile.
 - Check i_Add.m and the other files for usage information.
 
+IBEX 2.1.10 was used to build the provided libraries.
 Tested on Windows 8 64 bit using MATLAB R2014a, Ubuntu 10.10 64 bit using MATLAB R2010b, iMac OS X Yosemite 10.10.3 using MATLAB R2013b.
