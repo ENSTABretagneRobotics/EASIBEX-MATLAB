@@ -409,6 +409,10 @@
 			Name="MATLAB"
 			>
 		</Filter>
+		<Filter
+			Name="Python"
+			>
+		</Filter>
 		<File
 			RelativePath=".\Makefile"
 			>

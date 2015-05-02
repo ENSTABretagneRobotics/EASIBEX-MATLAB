@@ -187,6 +187,16 @@
     <ClCompile Include="..\interval_adapt\rmatrix.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="easibex.py" />
+    <None Include="easibex_utils.py" />
+    <None Include="i_Cdefaultbinarycontractor.py" />
+    <None Include="i_Cdefaultquaternarycontractor.py" />
+    <None Include="i_Cdefaultquinarycontractor.py" />
+    <None Include="i_Cdefaultternarycontractor.py" />
+    <None Include="i_Cdefaultunarycontractor.py" />
+    <None Include="i_defaultboolfn2arg.py" />
+    <None Include="i_defaultfn1arg.py" />
+    <None Include="i_defaultfn2arg.py" />
     <None Include="Makefile" />
   </ItemGroup>
   <ItemGroup>

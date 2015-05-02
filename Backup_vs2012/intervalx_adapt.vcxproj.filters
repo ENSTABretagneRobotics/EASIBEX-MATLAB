@@ -19,6 +19,9 @@
     <Filter Include="MATLAB">
       <UniqueIdentifier>{7cb54b83-4bf7-4231-950b-61c1aeeefc24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Python">
+      <UniqueIdentifier>{646000c9-ca6b-4d6e-85db-8b76aa31b2ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="intervalx_adapt.cpp">
@@ -42,6 +45,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
+    <None Include="easibex.py">
+      <Filter>Python</Filter>
+    </None>
+    <None Include="easibex_utils.py">
+      <Filter>Python</Filter>
+    </None>
+    <None Include="i_Cdefaultbinarycontractor.py">
+      <Filter>Python</Filter>
+    </None>
+    <None Include="i_Cdefaultquaternarycontractor.py">
+      <Filter>Python</Filter>
+    </None>
+    <None Include="i_Cdefaultquinarycontractor.py">
+      <Filter>Python</Filter>
+    </None>
+    <None Include="i_Cdefaultternarycontractor.py">
+      <Filter>Python</Filter>
+    </None>
+    <None Include="i_Cdefaultunarycontractor.py">
+      <Filter>Python</Filter>
+    </None>
+    <None Include="i_defaultboolfn2arg.py">
+      <Filter>Python</Filter>
+    </None>
+    <None Include="i_defaultfn1arg.py">
+      <Filter>Python</Filter>
+    </None>
+    <None Include="i_defaultfn2arg.py">
+      <Filter>Python</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="intervalx_adapt.h">

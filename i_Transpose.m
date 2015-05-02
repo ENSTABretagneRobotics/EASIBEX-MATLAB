@@ -1,2 +1,2 @@
-function r = i_Transpose(X_p)
-r = i_defaultfn1arg(X_p, 'Transposex');
+function Y = i_Transpose(X_p)
+Y = i_defaultfn1arg(X_p, 'Transposex');
