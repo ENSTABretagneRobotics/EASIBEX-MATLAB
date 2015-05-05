@@ -1,4 +1,4 @@
-% [X, X1, X2] = i_Bisect([[-10,10];[2,10];[10,11]])
+% [X1, X2] = i_Bisect([[-10,10];[2,10];[10,11]])
 function [X1, X2] = i_Bisect(X_p)
 
 % Ideally, user should load manually...

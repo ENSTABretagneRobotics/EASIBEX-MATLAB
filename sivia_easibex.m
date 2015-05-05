@@ -11,7 +11,6 @@ function r=Cout(X)
   %[X2,X1,c]=i_Csub(X2,X1,c);
   %[X2,X1]=i_Ctan(X2,X1);
   %[X1,X2]=i_CinRing(X1,X2,1,2,[1,1.5]);
-  %r=[X1;X2];
   [X1,X2]=i_SinRing(X1,X2,1,2,[1,1.5],1);
   r=[X1;X2];
 end
