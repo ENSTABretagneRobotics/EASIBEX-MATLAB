@@ -16,5 +16,7 @@ to enable MATLAB to find the libraries, and launch MATLAB from the terminal.
 - Run sivia_easibex.m to test. If you get errors, close MATLAB, delete the provided mac folder and follow the instructions in the Makefile.
 - Check i_Add.m and the other files for usage information.
 
+Check also http://www.ensta-bretagne.fr/lebars/easibex_matlab.pdf for more information.
+
 IBEX 2.1.10 was used to build the provided libraries.
 Tested on Windows 8 64 bit using MATLAB R2014a, Ubuntu 10.10 64 bit using MATLAB R2010b, iMac OS X Yosemite 10.10.3 using MATLAB R2013b.
