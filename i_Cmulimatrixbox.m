@@ -52,7 +52,7 @@ pc_p = libpointer('doublePtr', c_p);
 pA_p = libpointer('doublePtr', A_p);
 pb_p = libpointer('doublePtr', b_p);
 
-calllib('intervalx_adapt', 'Cmulimatrixbox', pc_p, pA_p, pb_p, nb, n, m);
+calllib('intervalx_adapt', 'Cmulimatrixboxx', pc_p, pA_p, pb_p, nb, n, m);
 
 c = pc_p.value;
 A = pA_p.value;
