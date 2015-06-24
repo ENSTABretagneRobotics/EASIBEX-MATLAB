@@ -3,6 +3,11 @@ global u;
 global bExit;
 global scale;
 
+button = questdlg('Robot localization in dead-reckoning when inside (below the line) and with GPS outside (above the line). Controls are z,s,q,d keys, zoom with +,- and stop with ESC. Ready?', 'Ready?');
+if (strcmp(button, 'Yes') == 0)
+    return;
+end
+
 % Create a figure that will use the function keycontrol() when a key is
 % pressed.
 fig = figure('Position',[200 200 400 400],'KeyPressFcn','keycontrol','Name','Ecrazor game','NumberTitle','off');
