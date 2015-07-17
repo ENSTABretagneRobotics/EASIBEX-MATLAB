@@ -6,7 +6,12 @@ Windows :
 - Check i_Add.m and the other files for usage information.
 
 Linux : 
-- Follow the instructions in the Makefile.
+- Type in a terminal something similar to (replace x64 by x86 if you use MATLAB 32 bit) : 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/EASIBEX-MATLAB-master/linux_x64
+to enable MATLAB to find the libraries, and launch MATLAB from the terminal.
+- In MATLAB, go to File\Set Path...\Add Folder... and add this folder as well as linux_x64 folder.
+- Run sivia_easibex.m to test. If you get errors, close MATLAB, delete the provided linux_x64 folder and follow the instructions in the Makefile.
+- Check i_Add.m and the other files for usage information.
 
 Mac : 
 - Type in a terminal something similar to : 
