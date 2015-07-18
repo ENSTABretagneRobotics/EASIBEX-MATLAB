@@ -10,9 +10,9 @@
 # export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/EASIBEX-MATLAB-master
 # to enable MATLAB to find the libraries, and launch MATLAB from the same terminal.
 # In some cases (MATLAB before 2013?) you might have to launch MATLAB using something similar to this : 
-# LD_PRELOAD=/usr/lib64/libstdc++.so.6 matlab
+# LD_PRELOAD=/usr/lib/libstdc++.so.6 matlab
 # or 
-# LD_PRELOAD=/usr/lib64/libstdc++.so.6:/lib64/libgcc_s.so.1 matlab
+# LD_PRELOAD=/usr/lib/libstdc++.so.6:/lib/libgcc_s.so.1 matlab
 # to force it to run using the system default version of the C++ Standard Library (otherwise MATLAB might use its 
 # own version, which is likely to be different from the one used when you built the shared libraries)...
 #
