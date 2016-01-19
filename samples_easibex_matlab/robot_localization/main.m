@@ -39,8 +39,8 @@ while (bExit == 0)
        x_hat(2,:) = i_Inter({x_hat(2,:);[y(2)-1,y(2)+1]}); 
     end
 
-    clf; hold on; axis([-scale,scale,-scale,scale]); 
-    plot([-scale,scale],[0,0],'c'); % Limit between inside (below) and outside (above, where GPS is available)
+    clf; hold on; axis([-scale,scale,-scale,scale]); axis square;
+    plot([-scale,scale],[0,0],'c'); % Limit between inside (below) and outside (above, where GPS is available).
     draw_hat(x_hat); % Draw estimated position.    
     draw(x); % Simulated robot.
     
