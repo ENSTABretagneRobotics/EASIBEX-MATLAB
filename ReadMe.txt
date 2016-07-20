@@ -27,3 +27,5 @@ Check also http://www.ensta-bretagne.fr/lebars/easibex_matlab.pdf for more infor
 
 IBEX 2.1.10 was used to build the provided libraries.
 Tested on Windows 8 64 bit using MATLAB R2014a, Ubuntu 10.10 64 bit using MATLAB R2010b, iMac OS X Yosemite 10.10.3 using MATLAB R2013b.
+
+See also https://github.com/ENSTABretagneRobotics/Hardware-MATLAB.
