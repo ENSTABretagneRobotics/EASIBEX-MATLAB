@@ -114,4 +114,4 @@ INTERVALX_ADAPT_API void Bisectx(double* pX, double* pX1, double* pX2, unsigned 
 }
 #endif
 
-#endif // INTERVALX_ADAPT_H
+#endif // !INTERVALX_ADAPT_H
